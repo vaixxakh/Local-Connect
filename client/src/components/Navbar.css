@@ -1,0 +1,75 @@
+.navbar {
+  background: #fffdfd;
+  padding: 15px 40px;
+  color: white;
+  font-family: 'Inter', sans-serif;
+ 
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+  color:#2E7D32;
+  text-decoration: none;
+   font-size: 20px;
+}
+.nav-links {
+  display: flex;
+  gap:35px
+}
+
+.nav-links a {
+  position: relative;
+  text-decoration: none;
+  color: #000000;
+  
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background-color: #17ec22;
+  transition: width 0.3s ease-in-out;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+.auth-section a {
+  margin-left: 15px;
+  text-decoration: none;
+  color: #e5e7eb;
+}
+
+.logout-btn {
+  margin-left: 15px;
+  padding: 6px 12px;
+  background: #ef4444;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.register-btn {
+  padding: 6px 12px;
+  background: #3b82f6;
+  border-radius: 4px;
+  color: white;
+}
+.login-btn {
+  background: #2E7D32;
+  padding: 6px 12px;
+  color:white;
+  border-radius: 4px;
+}

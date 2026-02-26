@@ -1,6 +1,11 @@
 const express = require("express");
 const cors = require("cors");
 
+const authRoutes = require("./routes/authRoutes");
+const bookingRoutes = require("./routes/bookingRoutes");
+const providerRoutes = require("./routes/providerRoutes");
+
+
 const app = express();
 
 app.use(cors());
@@ -13,5 +18,9 @@ app.get("/", (req, res) => {
     message: "API running successfully",
   });
 });
+
+app.use("/api/auth", authRoutes);
+app.use("/api/providers", providerRoutes);
+app.use("/api/bookings", bookingRoutes);
 
 module.exports = app;
