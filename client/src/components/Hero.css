@@ -6,6 +6,21 @@
   font-family: 'Inter', sans-serif;
   background: linear-gradient(to right, #e8f5e9, #ffffff);
 }
+.hero-right {
+  position: relative;
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.hero-right img {
+  width: 550px;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  position: relative;
+  z-index: 1;
+}
 
 .hero-left {
   max-width: 50%;
@@ -30,8 +45,8 @@
 
 .subtitle {
   margin-top: 15px;
-  color: #6b7280;
-  font-size: 16px;
+  color: #4B5563;
+  font-size: 18px;
 }
 
 .search-box {

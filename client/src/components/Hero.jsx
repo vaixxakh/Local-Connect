@@ -1,4 +1,6 @@
 import "./Hero.css";
+import heroImage from "../../src/assets/hero-image/Hero-image.png"
+
 
 const Hero = () => {
   return (
@@ -13,8 +15,9 @@ const Hero = () => {
         </h1>
 
         <p className="subtitle">
-          Connect with verified electricians, auto drivers, doctors,
-          and more instantly.
+        Connect with verified electricians, auto drivers, doctors,
+        and more instantly. Your community's best professionals in
+        Kasaragod, just a click away.
         </p>
 
         <div className="search-box">
@@ -32,10 +35,7 @@ const Hero = () => {
       </div>
 
       <div className="hero-right">
-        <img
-          src="https://i.imgur.com/9q6qZ0P.png"
-          alt="Local Service"
-        />
+         <img src={heroImage} alt="Local Service" />
       </div>
 
     </section>
