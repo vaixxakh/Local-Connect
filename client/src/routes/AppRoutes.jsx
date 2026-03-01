@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {  Routes, Route } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import AuthLayout from "../layouts/AuthLayout";
 
@@ -10,9 +10,9 @@ import ProviderDetails from "../pages/ProviderDetails";
 import Dashboard from "../pages/Dashboard";
 import MyBookings from "../pages/MyBookings";
 import Emergency from "../pages/Emergency";
-const AppRoutes = () => {
+const AppRoutes = ({onLoginClick }) => {
     return (
-        <BrowserRouter>
+        
             <Routes>
 
         <Route element={<AuthLayout />}>
@@ -21,7 +21,7 @@ const AppRoutes = () => {
         </Route>
 
         
-        <Route element={<MainLayout />}>
+        <Route element={<MainLayout onLoginClick={onLoginClick} />}>
           <Route path="/" element={<Home />} />
           <Route path="/providers" element={<Providers />} />
           <Route path="/providers/:id" element={<ProviderDetails />} />
@@ -31,7 +31,6 @@ const AppRoutes = () => {
         </Route>
 
       </Routes>
-        </BrowserRouter>
     )
 };
 export default AppRoutes;

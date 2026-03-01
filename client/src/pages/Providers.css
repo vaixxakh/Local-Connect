@@ -1,0 +1,128 @@
+.providers-page {
+  padding: 30px 60px;
+  background: #f3f4f6;
+  font-family: "inter", sans-serif
+}
+
+/* SEARCH BAR */
+.search-bar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.search-input {
+  background: #fff;
+  padding: 10px 15px;
+  border-radius: 8px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  width: 60%;
+}
+
+.search-input input {
+  border: none;
+  outline: none;
+  width: 100%;
+}
+
+.search-actions button {
+  margin-left: 10px;
+  padding: 8px 15px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: #fff;
+}
+
+/* LAYOUT */
+.providers-content {
+  display: flex;
+  gap: 30px;
+}
+
+/* SIDEBAR */
+.filters-sidebar {
+  width: 250px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.filter-section {
+  margin-top: 20px;
+}
+
+
+.providers-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.provider-card-modern {
+  background: #fff;
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.card-top {
+  display: flex;
+  gap: 12px;
+}
+
+.card-top img {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.provider-meta h3 {
+  margin: 0;
+}
+
+.status.online {
+  color: #16a34a;
+  font-size: 12px;
+}
+
+.card-info {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.info-label {
+  font-size: 10px;
+  color: #9ca3af;
+}
+
+.star {
+  color: #facc15;
+}
+
+.card-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.profile-btn {
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: #fff;
+}
+
+.call-btn {
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+  background: #2e7d32;
+  color: white;
+}
