@@ -7,7 +7,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Providers from "../pages/Providers";
 import ProviderDetails from "../pages/ProviderDetails";
-import Dashboard from "../pages/Dashboard";
+import Dashboard from "../pages/Profile";
 import MyBookings from "../pages/MyBookings";
 import Emergency from "../pages/Emergency";
 const AppRoutes = ({onLoginClick }) => {

@@ -1,0 +1,72 @@
+/* PAGE STRUCTURE */
+.emergency-page {
+  font-family: "Inter", sans-serif;
+}
+
+/* SEARCH BOX */
+.search-box {
+  width: 400px;
+  max-width: 100%;
+}
+
+/* FILTER BUTTONS */
+.filter-btn {
+  background: white;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: 0.3s ease;
+}
+
+.filter-btn:hover {
+  transform: translateY(-2px);
+}
+
+.filter-btn.active {
+  background: #22c55e;
+  color: white;
+}
+
+/* SECTION TITLE */
+.section-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+/* CRITICAL PANEL */
+.critical-panel {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* GLOBAL CALL BUTTON */
+.global-call-btn {
+  width: 100%;
+  background: #dc2626;
+  color: white;
+  padding: 16px;
+  border-radius: 14px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  transition: 0.3s ease;
+}
+
+.global-call-btn:hover {
+  background: #b91c1c;
+  transform: translateY(-2px);
+}

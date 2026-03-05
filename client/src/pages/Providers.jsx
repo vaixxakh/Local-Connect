@@ -1,31 +1,41 @@
+import { useEffect, useState } from "react";
+import ProvidersSearchBar from "../components/providersPage/ProvidersSearchBar";
+import ProvidersSidebar from "../components/providersPage/ProvidersSideBar";
+import ProviderCard from "../components/providersPage/ProvidersCard";
+import { fetchProviders } from "../service/providerService";
 import "./Providers.css";
-import SearchBar from "../components/SearchBar";
-import FiltersSidebar from "../components/FilteredSideBar";
-import ProviderCard from "../components/ProviderCard";
-
-import electrician from "../assets/service-card/electrician.png";
-
-const providers = [
-  {
-    name: "Dhinesh P.",
-    category: "Electrician",
-    experience: 8,
-    rating: 4.5,
-    location: "Kasaragod Town",
-    status: "Online",
-    image: electrician,
-  },
-];
 
 const ProvidersPage = () => {
+  const [providers, setProviders] = useState([]);
+  const [filters, setFilters] = useState({
+    search: "",
+    location: "",
+    category: "",
+    rating: "",
+    available: false,
+  });
+
+  useEffect(() => {
+    const loadProviders = async () => {
+      const data = await fetchProviders(filters);
+      setProviders(data);
+    };
+
+    loadProviders();
+  }, [filters]);
+
   return (
-    <div className="providers-page">
-      <SearchBar />
-      <div className="providers-content">
-        <FiltersSidebar />
-        <div className="providers-grid">
-          {providers.map((provider, index) => (
-            <ProviderCard key={index} provider={provider} />
+    <div className="min-h-screen bg-gray-100 p-8">
+
+      <ProvidersSearchBar filters={filters} setFilters={setFilters} />
+
+      <div className="flex gap-8 mt-6">
+
+        <ProvidersSidebar filters={filters} setFilters={setFilters} />
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 flex-1">
+          {providers.map((provider) => (
+            <ProviderCard key={provider._id} provider={provider} />
           ))}
         </div>
 

@@ -7,7 +7,9 @@ const Hero = () => {
     <section className="hero">
 
       <div className="hero-left">
+
         <p className="live-tag">● LIVE IN KASARAGOD</p>
+       
 
         <h1 >
           Find Trusted Local <br />

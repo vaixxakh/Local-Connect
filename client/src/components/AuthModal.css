@@ -1,0 +1,61 @@
+/* OVERLAY */
+.auth-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  backdrop-filter:blur(8px);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
+}
+
+/* MODAL */
+.auth-modal{
+  width:900px;
+  height:550px;
+  background:#fff;
+  border-radius:20px;
+  overflow:hidden;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+}
+
+/* CLOSE BUTTON */
+.close-btn{
+  position:absolute;
+  right:20px;
+  top:18px;
+  font-size:18px;
+  cursor:pointer;
+  z-index:5;
+}
+
+/* HEADER */
+.auth-header{
+  display:flex;
+  justify-content:center;
+  gap:30px;
+  padding:18px 0;
+  border-bottom:1px solid #eee;
+}
+
+.auth-header button{
+  background:none;
+  border:none;
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.auth-header button.active{
+  color:#2ecc71;
+  border-bottom:2px solid #2ecc71;
+}
+
+/* CONTENT */
+.auth-content{
+  flex:1;
+  display:flex;
+}

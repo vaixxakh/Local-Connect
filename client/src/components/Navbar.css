@@ -59,6 +59,11 @@
   color: white;
   cursor: pointer;
   border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+  background: #dc2626;
 }
 
 .register-btn {
@@ -72,4 +77,71 @@
   padding: 6px 12px;
   color:white;
   border-radius: 4px;
+}
+.profile-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-bottom: 5px;
+}
+
+.profile-trigger {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.username {
+  font-weight: 500;
+  color: #2E7D32;
+}
+
+.menu-icon {
+  font-size: 14px;
+  color: #2E7D32;
+}
+.profile-dropdown {
+  position: absolute;
+  top: 35px;
+  right: -74px;
+  background: rgba(252, 255, 253, 0.479);
+  width: 190px;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  padding: 10px 0;
+  z-index: 100;
+}
+
+.profile-dropdown a,
+.profile-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 14px;;
+  text-align: left;
+  background: none;
+  border: none;
+  text-decoration: none;
+  color: #333;
+  cursor: pointer;
+}
+
+.profile-dropdown a:hover,
+.profile-dropdown button:hover {
+  background: #f3f4f6;
+}
+.role-switch-btn{
+  background:#2E7D32;
+  color:white;
+  border:none;
+  padding:6px 10px;
+  border-radius:6px;
+  cursor:pointer;
+  font-size:13px;
+}
+.switch-btn:focus {
+  outline: none;
+  box-shadow: none;
 }

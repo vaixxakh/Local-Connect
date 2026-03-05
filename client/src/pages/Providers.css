@@ -4,7 +4,6 @@
   font-family: "inter", sans-serif
 }
 
-/* SEARCH BAR */
 .search-bar {
   display: flex;
   justify-content: space-between;
@@ -35,13 +34,11 @@
   background: #fff;
 }
 
-/* LAYOUT */
 .providers-content {
   display: flex;
   gap: 30px;
 }
 
-/* SIDEBAR */
 .filters-sidebar {
   width: 250px;
   background: #fff;

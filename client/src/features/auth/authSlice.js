@@ -14,18 +14,28 @@ const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        loginStart: (state, action) => {
+        loginStart: (state) => {
+            state.loading = true;
+            state.error = null;
+        },
+        loginSuccess: (state, action) => {
             state.loading = false;
             state.user = action.payload;
-            localStorage.setItem("user", JSON.stringify(action.payload))
+
+            localStorage.setItem("user", JSON.stringify(action.payload));
         },
+
         loginFail: (state, action) => {
             state.loading = false;
             state.error = action.payload;
         },
         logout : (state) => {
             state.user = null;
+            state.loading = false;
+            state.error = null;
+
             localStorage.removeItem("user");
+            localStorage.removeItem("token");
         },
     },
 });

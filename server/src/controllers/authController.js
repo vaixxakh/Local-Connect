@@ -10,9 +10,10 @@
     };
 
     exports.registerUser = asyncHandler(async (req, res) => {
-        const { name, email, password, phone, registrationPurpose } = req.body;
 
-            if(!name || !phone || !email || !password || !registrationPurpose){
+        const { fullName, email, password, phoneNumber, role } = req.body;
+
+            if(!fullName || !phoneNumber || !email || !password || !role){
                 res.status(400);
                 throw new Error("All fields are required!");
             };
@@ -28,27 +29,29 @@
             const hashedPasword = await bcrypt.hash(password, salt);
 
             const user = await User.create({
-                name, 
-                phone,
+                fullName, 
+                phoneNumber,
                 email, 
                 password: hashedPasword,
-                registrationPurpose,
+                role,
             });
 
             res.status(201).json({
                 success: true,
+                messaage: "Registration successful",
                 token: generateToken(user._id),
                 user: {
                     id: user._id,
-                    name:user.name,
-                    phone: user.phone,
+                    fullName: user.fullName,
+                    phoneNumber: user.phoneNumber,
                     email:user.email,
-                    registrationPurpose: user.registrationPurpose,
+                    role: user.role,
                 },
             });
         });
 
         exports.loginUser = asyncHandler(async(req, res) => {
+            
             const { email, password } = req.body;
 
               if (!email || !password) {
@@ -75,10 +78,10 @@
                 token: generateToken(user._id),
                 user: {
                 id: user._id,
-                name: user.name,
+                fullName: user.fullName,
                 email: user.email,
-                phone: user.phone,
-                registrationPurpose: user.registrationPurpose,
+                phoneNumber: user.phoneNumber,
+                role: user.role,
                 },
             });
         })
