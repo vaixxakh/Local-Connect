@@ -7,18 +7,59 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependency directories
 node_modules
+client/node_modules
+server/node_modules
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build folders
 dist
 dist-ssr
+build
+client/dist
+server/dist
+
+# Temporary files
 *.local
+*.tmp
+*.temp
+
+# OS generated files
+.DS_Store
+Thumbs.db
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
 .idea
-.DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# Coverage
+coverage
+
+# Cache
+.cache
+.parcel-cache
+
+# Vite
+vite.svg
+
+# Next / Nuxt (future safe)
+.next
+.nuxt
+
+# Optional logs
+*.pid
+*.seed
+*.pid.lock

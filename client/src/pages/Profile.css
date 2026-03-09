@@ -1,0 +1,84 @@
+.profile-layout{
+display:flex;
+background:#f8fafc;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+width:260px;
+background:#fff;
+padding:25px;
+border-right:1px solid #e5e7eb;
+position:sticky;
+top:0;
+height:100vh;
+}
+
+.logo{
+font-weight:700;
+font-size:20px;
+margin-bottom:25px;
+}
+
+.sidebar-menu li{
+display:flex;
+align-items:center;
+gap:10px;
+padding:12px;
+border-radius:8px;
+cursor:pointer;
+margin-bottom:6px;
+transition:0.3s;
+}
+
+.sidebar-menu li:hover{
+background:#f3f4f6;
+}
+
+.sidebar-menu li.active{
+background:#dcfce7;
+color:#16a34a;
+font-weight:600;
+}
+
+.logout{
+color:#ef4444;
+}
+
+/* MAIN CONTENT */
+
+.profile-content{
+flex:1;
+padding:30px;
+}
+
+/* CARD */
+
+.dashboard-card{
+background:white;
+padding:20px;
+border-radius:14px;
+box-shadow:0 6px 18px rgba(0,0,0,0.05);
+transition:0.3s;
+}
+
+.dashboard-card:hover{
+transform:translateY(-2px);
+box-shadow:0 10px 25px rgba(0,0,0,0.07);
+}
+
+@media(max-width:1024px){
+
+.sidebar{
+display:none;
+}
+
+.profile-content{
+padding:15px;
+}
+
+}
+html{
+scroll-behavior:smooth;
+}

@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const  multer = require("multer");
 
 exports.switchRole = async (req, res ) => {
 
@@ -16,4 +17,30 @@ exports.switchRole = async (req, res ) => {
         success: true,
         user
     });
+};
+
+export const uploadProfilePicture = async (req, res) => {
+
+  try {
+
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { profileImage: req.file.path },
+      { new: true }
+    );
+
+    res.json({
+      success: true,
+      user
+    });
+
+  } catch (error) {
+
+    res.status(500).json({
+      success:false,
+      message:error.message
+    });
+
+  }
+
 };

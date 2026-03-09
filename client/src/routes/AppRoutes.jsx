@@ -7,13 +7,14 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Providers from "../pages/Providers";
 import ProviderDetails from "../pages/ProviderDetails";
-import Dashboard from "../pages/Profile";
+import Profile from "../pages/Profile";
+
 import MyBookings from "../pages/MyBookings";
 import Emergency from "../pages/Emergency";
 const AppRoutes = ({onLoginClick }) => {
     return (
         
-            <Routes>
+      <Routes>
 
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
@@ -23,9 +24,10 @@ const AppRoutes = ({onLoginClick }) => {
         
         <Route element={<MainLayout onLoginClick={onLoginClick} />}>
           <Route path="/" element={<Home />} />
+
           <Route path="/providers" element={<Providers />} />
           <Route path="/providers/:id" element={<ProviderDetails />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/my-bookings" element={<MyBookings />} />
           <Route path="/emergency" element={<Emergency />} />
         </Route>

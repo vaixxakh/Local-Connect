@@ -5,7 +5,6 @@ import {  FaBell, FaHeart, FaUserCircle, FaUser,FaHistory,  FaClipboardList, FaF
 import { useState } from "react";
 import toast from "react-hot-toast";
 import API from "../service/api.js";
-
 import "./Navbar.css";
 
 const Navbar = ({ onLoginClick }) => {
@@ -78,7 +77,7 @@ const Navbar = ({ onLoginClick }) => {
           onMouseLeave={() => setOpen(false)}
         >
           <div className="profile-trigger">
-           <FaUserCircle size={26} color="#12130d" />
+           <FaUserCircle size={26} color="#a9ac9e" />
             <span className="username">
             @{username?.charAt(0) + username?.slice(1)}
           </span>
@@ -86,7 +85,7 @@ const Navbar = ({ onLoginClick }) => {
 
           {open && (
            <div className="profile-dropdown">
-            <Link to="/dashboard">
+            <Link to="/profile">
               <FaUser className="menu-icon" />
               Account
             </Link>

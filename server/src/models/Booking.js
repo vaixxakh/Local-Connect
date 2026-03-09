@@ -12,6 +12,8 @@ const mongoose = require("mongoose");
             ref: "User",
             required: true,
         },
+                providerName: String,
+        service: String,
         status: {
             type: String,
             enum: ["pending", "accepted", "completed", "cancelled"],

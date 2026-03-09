@@ -20,6 +20,7 @@ app.get("/", (req, res) => {
   });
 });
 
+app.use("/uploads", express.static("uploads"));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/providers", providerRoutes);
