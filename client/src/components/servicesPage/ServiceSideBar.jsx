@@ -11,8 +11,6 @@ const categories = [
 const ProvidersSidebar = ({ filters, setFilters }) => {
   return (
     <div className="w-72 bg-white rounded-2xl shadow-md p-6">
-
-      {/* AVAILABLE SWITCH */}
       <div className="flex items-center justify-between mb-2">
         <div>
           <h3 className="font-semibold text-gray-800">
@@ -42,7 +40,6 @@ const ProvidersSidebar = ({ filters, setFilters }) => {
 
       <hr className="my-6" />
 
-      {/* CATEGORIES */}
       <h4 className="text-sm font-semibold text-gray-500 mb-4 uppercase">
         Categories
       </h4>

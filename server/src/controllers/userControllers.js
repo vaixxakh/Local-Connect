@@ -3,8 +3,10 @@ const  multer = require("multer");
 
 exports.switchRole = async (req, res ) => {
 
-    const user = await User.findById(req.user.id);
+  try {
 
+    const user = await User.findById(req.user.id);
+  
     if (!user) {
         return res.status(404).json({
             success: false,
@@ -13,13 +15,28 @@ exports.switchRole = async (req, res ) => {
     }
     user.role = user.role === "finder" ? "provider" : "finder";
     await user.save();
-    res.json({
+
+    res.status(200).json({
         success: true,
-        user
+        message: `Role switched to ${user.role}`,
+        user: {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          role: user.role
+        }
     });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message || "Server error",
+    });
+  }
+
 };
 
-export const uploadProfilePicture = async (req, res) => {
+
+exports.uploadProfilePicture = async (req, res) => {
 
   try {
 

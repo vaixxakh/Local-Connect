@@ -1,7 +1,7 @@
 import { FaPhoneAlt, FaSearch } from "react-icons/fa";
 import EmergencyCard from "../components/EmergencyCard";
 import EmergencyNumber from "../components/EmergencyNumber";
-import "./Emergency.css";
+import "../styles/Emergency.css";
 
 const Emergency = () => {
   return (

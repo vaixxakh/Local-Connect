@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import ProvidersSearchBar from "../components/providersPage/ProvidersSearchBar";
-import ProvidersSidebar from "../components/providersPage/ProvidersSideBar";
-import ProviderCard from "../components/providersPage/ProvidersCard";
+import ServiceSearchBar from "../components/servicesPage/ServiceSearchBar";
+import ServiceSidebar from "../components/servicesPage/ServiceSideBar";
+import ServiceCard from "../components/popularService/ServiceCard";
 import { fetchProviders } from "../service/providerService";
-import "./Providers.css";
+import "./Services.css";
 
 const ProvidersPage = () => {
   const [providers, setProviders] = useState([]);
@@ -27,15 +27,15 @@ const ProvidersPage = () => {
   return (
     <div className="min-h-screen bg-gray-100 p-8">
 
-      <ProvidersSearchBar filters={filters} setFilters={setFilters} />
+      <ServiceSearchBar filters={filters} setFilters={setFilters} />
 
       <div className="flex gap-8 mt-6">
 
-        <ProvidersSidebar filters={filters} setFilters={setFilters} />
+        <ServiceSidebar filters={filters} setFilters={setFilters} />
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 flex-1">
           {providers.map((provider) => (
-            <ProviderCard key={provider._id} provider={provider} />
+            <ServiceCard key={provider._id} provider={provider} />
           ))}
         </div>
 

@@ -1,19 +1,19 @@
 import { useState } from "react";
 import { FaSearch, FaUserTie, FaEye, FaEyeSlash } from "react-icons/fa";
-import "./Register.css";
 import API from "../service/api.js";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import "../pages/Register.css";
 
-const Register = ({onClose}) => {
+const Register = ({ onClose }) => {
 
-  const  navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [purpose, setPurpose] = useState("finder");
-  const [ loading, setLoading ] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
 
     e.preventDefault();
     setLoading(true);
@@ -27,104 +27,189 @@ const Register = ({onClose}) => {
     };
 
     try {
+
       const res = await API.post("/auth/register", formData);
-      console.log(res.data);
 
       localStorage.setItem("token", res.data.token);
-      
+
       toast.success("Registration successful!");
       onClose();
 
-      setTimeout(() => {  
-      navigate("/");
-      }, 1000);
+      setTimeout(() => {
+        const user = res.data.user;
+
+        if(user.role === "provider"){
+          navigate("/provider-dashboard");
+        }else{
+          navigate("/");
+        }
+
+      },1000);
+
     } catch (error) {
+
       toast.error(error.response?.data?.message || "Registration failed");
-    } finally{
+
+    } finally {
+
       setLoading(false);
+
     }
   };
 
   return (
-    <div className="register-container">
-      <div className="register-left">
-        <h1>
-          Find the best local talent in <span>Kasaragod</span>
+
+    <div className="register-container flex min-h-screen bg-gray-100">
+
+
+      <div className="register-left hidden lg:flex w-1/2 bg-green-600 text-white items-center justify-center p-10">
+
+        <h1 className="text-3xl font-bold text-center">
+
+          Find the best local talent in 
+          <span className="text-yellow-300"> Kasaragod</span>
+
         </h1>
+
       </div>
+      <div className="register-right flex w-full lg:w-1/2 items-start justify-center pt-0 px-10">
 
-      <div className="register-right">
+        <form
+        onSubmit={handleSubmit}
+        className="bg-white shadow-lg rounded-xl p-5 w-full max-w-md space-y-1"
+        >
 
-        <h2>Create your account</h2>
+          <h2 className="text-2xl font-bold ">
+            Create your account
+          </h2>
 
-        <p className="subtitle">
-          Join the community to start exploring or providing services.
-        </p>
+          <p className="subtitle text-gray-500 mb-1">
+            Join the community to start exploring or providing services.
+          </p>
 
-        <form onSubmit={handleSubmit}>
-          <div className="form-row">
+          <div className="form-row grid grid-cols-2 gap-1">
+
             <div>
-              <label>Full Name</label>
-              <input name="fullName" required />
+
+              <label className="text-sm font-medium">
+                Full Name
+              </label>
+
+              <input
+              name="fullName"
+              required
+              className="w-full border rounded-lg px-3 py-2 mt-1 focus:ring-2 focus:ring-blue-500"
+              />
+
             </div>
 
             <div>
-              <label>Phone Number</label>
-              <input name="phoneNumber" required />
+
+              <label className="text-sm font-medium">
+                Phone Number
+              </label>
+
+              <input
+              name="phoneNumber"
+              required
+              className="w-full border rounded-lg px-3 py-2 mt-1 focus:ring-2 focus:ring-blue-500"
+              />
+
             </div>
+
           </div>
 
-          <label>Email Address</label>
-          <input name="email" type="email" required />
 
-          <label>Password</label>
+          <div>
+
+            <label className="text-sm font-medium">
+              Email Address
+            </label>
+
+            <input
+            name="email"
+            type="email"
+            required
+            className="w-full border rounded-lg px-3 py-2 mt-1 focus:ring-2 focus:ring-blue-500"
+            />
+
+          </div>
 
           <div className="password-field">
-          <input
-            name="password" 
-           type={showPassword ? "text" : "password"} 
-           required 
-          />
-           <span
+
+            <label className="text-sm font-medium">
+              Password
+            </label>
+
+            <div className="relative">
+
+              <input
+              name="password"
+              type={showPassword ? "text" : "password"}
+              required
+              className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500"
+              />
+
+              <span
               onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
-            </span>
+              >
+                {showPassword ? <FaEyeSlash/> : <FaEye/>}
+              </span>
+
+            </div>
+
           </div>
 
-          <p className="purpose-title">I want to...</p>
+
+          <p className="purpose-title">
+            I want to...
+          </p>
 
           <div className="purpose-options">
+
             <div
-              className={`purpose-card ${
-                purpose === "finder" ? "active" : ""
-              }`}
-              onClick={() => setPurpose("finder")}
+            className={`purpose-card ${purpose === "finder" ? "active" : ""}`}
+            onClick={() => setPurpose("finder")}
             >
-              <FaSearch />
+
+              <FaSearch className="mx-auto mb-2"/>
+
               <p>Find Services</p>
+
             </div>
 
             <div
-              className={`purpose-card ${
-                purpose === "provider" ? "active" : ""
-              }`}
-              onClick={() => setPurpose("provider")}
+            className={`purpose-card ${purpose === "provider" ? "active" : ""}`}
+            onClick={() => setPurpose("provider")}
             >
-              <FaUserTie />
+
+              <FaUserTie className="mx-auto mb-2"/>
+
               <p>Provide Services</p>
+
             </div>
+
           </div>
 
-          <button type="submit" className="primary-btn" disabled={loading}>
+
+          <button
+          type="submit"
+          disabled={loading}
+          className="primary-btn w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+          >
+
             {loading ? "Registering..." : "Register →"}
+
           </button>
+
         </form>
 
       </div>
 
     </div>
+
   );
+
 };
 
 export default Register;

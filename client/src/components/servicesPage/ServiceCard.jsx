@@ -14,8 +14,6 @@ const ProviderCard = ({ provider }) => {
 
   return (
     <div className="bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition duration-300">
-
-      {/* TOP SECTION */}
       <div className="flex items-center gap-4 mb-4">
 
         <img

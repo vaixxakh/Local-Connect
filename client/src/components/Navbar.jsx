@@ -1,4 +1,4 @@
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate , useLocation} from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, loginSuccess } from "../features/auth/authSlice";
 import {  FaBell, FaHeart, FaUserCircle, FaUser,FaHistory,  FaClipboardList, FaFileAlt,  FaArrowRight } from "react-icons/fa";
@@ -8,17 +8,26 @@ import API from "../service/api.js";
 import "./Navbar.css";
 
 const Navbar = ({ onLoginClick }) => {
+  
   const { user } = useSelector((state) => state.auth);
+  
   const username =  user?.email?.split("@")[0] ;
-
+  
   const [ open , setOpen ] = useState(false);
   
   const dispatch = useDispatch();
-
+  
   const navigate = useNavigate();
+  
+  const location = useLocation();
 
+if(location.pathname === "/provider-dashboard"){
+return null;
+}
   const switchRole = async () => {
+    
     try {
+      
       const res = await API.patch("/users/switch-role");
 
       const updatedUser = res.data.user;
@@ -27,7 +36,18 @@ const Navbar = ({ onLoginClick }) => {
 
       localStorage.setItem("user", JSON.stringify(updatedUser));
 
-      toast.success(`Switched to ${res.data.user.role} role`);
+      if(updatedUser.role === "provider"){
+
+        navigate("/provider-dashboard");
+
+        toast.success(`Switched to ${res.data.user.role} role`);
+
+      } else{
+        navigate("/");
+
+        toast.success(`Switched to ${res.data.user.role} role`);
+      }
+
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to switch role");
   }
@@ -47,7 +67,7 @@ const Navbar = ({ onLoginClick }) => {
 
         <div className="nav-links">
           <NavLink to="/">Home</NavLink>
-          <NavLink to="/providers">Services</NavLink>
+          <NavLink to="/Services">Services</NavLink>
           <NavLink to="/emergency">Emergency</NavLink>
         
           {user && (

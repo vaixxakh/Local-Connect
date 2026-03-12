@@ -1,11 +1,11 @@
 import  { createSlice} from "@reduxjs/toolkit";
 
-const userFormStorage = localStorage.getItem("user")
+const userFromStorage = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user")) 
     : null;
 
 const initialState = {
-    user: userFormStorage,
+    user: userFromStorage,
     loading: false,
     error: null,
 };
@@ -20,9 +20,10 @@ const authSlice = createSlice({
         },
         loginSuccess: (state, action) => {
             state.loading = false;
-            state.user = action.payload;
+            state.user = action.payload.user;
 
-            localStorage.setItem("user", JSON.stringify(action.payload));
+            localStorage.setItem("user", JSON.stringify(action.payload.user));
+            localStorage.setItem("token", action.payload.token);
         },
 
         loginFail: (state, action) => {

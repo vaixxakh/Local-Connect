@@ -1,16 +1,19 @@
 import {  Routes, Route } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import AuthLayout from "../layouts/AuthLayout";
+import ProviderRoute from "./ProviderRoute";
 
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
-import Providers from "../pages/Providers";
+import Services from "../pages/Services"
+import ProviderDashboard from "../pages/ProviderDashboard";
 import ProviderDetails from "../pages/ProviderDetails";
 import Profile from "../pages/Profile";
 
 import MyBookings from "../pages/MyBookings";
 import Emergency from "../pages/Emergency";
+
 const AppRoutes = ({onLoginClick }) => {
     return (
         
@@ -25,7 +28,15 @@ const AppRoutes = ({onLoginClick }) => {
         <Route element={<MainLayout onLoginClick={onLoginClick} />}>
           <Route path="/" element={<Home />} />
 
-          <Route path="/providers" element={<Providers />} />
+          <Route path="/Services" element={<Services />} />
+          <Route
+              path="/provider-dashboard"
+              element={
+                <ProviderRoute>
+                <ProviderDashboard/>
+                </ProviderRoute>
+                }
+            />
           <Route path="/providers/:id" element={<ProviderDetails />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/my-bookings" element={<MyBookings />} />

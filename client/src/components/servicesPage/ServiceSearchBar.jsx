@@ -1,5 +1,5 @@
 import { FaSearch, FaMapMarkerAlt } from "react-icons/fa";
-import "./ProvidersSearchBar.css";
+import "./ServiceSearchBar.css";
 const ProvidersSearchBar = ({ filters, setFilters }) => {
   return (
     <div className="flex items-center gap-4 w-full">

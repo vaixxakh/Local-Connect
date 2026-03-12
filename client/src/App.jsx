@@ -1,12 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AppRoutes from "./routes/AppRoutes";
 import AuthModal from "./components/AuthModal";
 import { Toaster } from "react-hot-toast";
+import MainLayout from "./layouts/MainLayout";
+import { useNavigate } from "react-router-dom";
+
 
 function App() {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const openAuth = () => setIsAuthOpen(true);
-const closeAuth = () => setIsAuthOpen(false);
+  const navigate = useNavigate();
+  const closeAuth = () => setIsAuthOpen(false);
+  const role = localStorage.getItem("role");
+
+  { role !== "provider" && <MainLayout/>}
+
+      useEffect(()=>{
+
+      if(role==="provider"){
+      navigate("/provider-dashboard")
+      }
+
+      },[])
 
   return (
     <>
