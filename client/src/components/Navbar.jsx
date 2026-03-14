@@ -1,149 +1,214 @@
 import { Link, NavLink, useNavigate , useLocation} from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, loginSuccess } from "../features/auth/authSlice";
-import {  FaBell, FaHeart, FaUserCircle, FaUser,FaHistory,  FaClipboardList, FaFileAlt,  FaArrowRight } from "react-icons/fa";
-import { useState } from "react";
+import { FaBell, FaHeart, FaUserCircle, FaUser,FaHistory, FaClipboardList, FaFileAlt, FaArrowRight, FaBars, FaTimes } from "react-icons/fa";
+import { useState, useRef, useEffect } from "react";
 import toast from "react-hot-toast";
 import API from "../service/api.js";
 import "./Navbar.css";
 
 const Navbar = ({ onLoginClick }) => {
-  
+
   const { user } = useSelector((state) => state.auth);
-  
-  const username =  user?.email?.split("@")[0] ;
-  
-  const [ open , setOpen ] = useState(false);
-  
+  const username = user?.email?.split("@")[0];
+
+  const [open , setOpen] = useState(false);
+  const [mobileMenu , setMobileMenu] = useState(false);
+
   const dispatch = useDispatch();
-  
   const navigate = useNavigate();
-  
+
+  const dropdownRef = useRef();
+
   const location = useLocation();
 
-if(location.pathname === "/provider-dashboard"){
-return null;
-}
+   useEffect(() => {
+  function handleClickOutside(event) {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setOpen(false);
+    }
+  }
+
+  document.addEventListener("mousedown", handleClickOutside);
+
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
+}, []);
+
+  if(location.pathname === "/provider-dashboard"){
+    return null;
+  }
+
+ 
+
   const switchRole = async () => {
-    
+
     try {
-      
+
       const res = await API.patch("/users/switch-role");
 
       const updatedUser = res.data.user;
 
-      dispatch(loginSuccess(updatedUser));
+      dispatch(loginSuccess({
+        user: updatedUser,
+        token: localStorage.getItem("token")
+      }));
 
-      localStorage.setItem("user", JSON.stringify(updatedUser));
+       if(updatedUser.role === "provider"){
+      navigate("/provider-dashboard");
+    } else{
+      navigate("/");
+    }
 
-      if(updatedUser.role === "provider"){
-
-        navigate("/provider-dashboard");
-
-        toast.success(`Switched to ${res.data.user.role} role`);
-
-      } else{
-        navigate("/");
-
-        toast.success(`Switched to ${res.data.user.role} role`);
-      }
+    toast.success(`Switched to ${updatedUser.role}`);;
 
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to switch role");
-  }
+    }
+
   };
+
   const handleLogout = () => {
     dispatch(logout());
     navigate("/");
   };
 
   return (
-    <nav className="navbar">
-      <div className="navbar-container">
+    <nav className="navbar w-full backdrop-blur-lg bg-white/80 border-b border-gray-200 sticky top-0 z-50">
 
-        <Link to="/" className="logo">
+      <div className="navbar-container max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
+
+        <Link to="/" className="logo text-xl font-bold   tracking-wide py-2 ">
           LocalConnect
         </Link>
 
-        <div className="nav-links">
-          <NavLink to="/">Home</NavLink>
-          <NavLink to="/Services">Services</NavLink>
-          <NavLink to="/emergency">Emergency</NavLink>
-        
+        <div className="nav-links hidden lg:flex items-center gap-8 font-medium text-gray-700">
+
+          <NavLink className="hover:text-blue-600 transition" to="/">Home</NavLink>
+          <NavLink className="hover:text-blue-600 transition" to="/Services">Services</NavLink>
+          <NavLink className="hover:text-blue-600 transition" to="/emergency">Emergency</NavLink>
+
           {user && (
-            <>
-             
-              <FaHeart  size={22} color="#f01734" />
-              <FaBell size={22} color="#686868da" />
+            <div className="flex items-center gap-4">
 
-              {user?.role === "finder" ? (
-              <button className="role-switch-btn"  onClick={switchRole}>
-                Switch to Provider
+              <FaHeart size={20} className="text-red-500 cursor-pointer hover:scale-110 transition"/>
+              <FaBell size={20} className="text-gray-500 cursor-pointer hover:scale-110 transition"/>
+
+              <button
+                className="role-switch-btn px-3 py-1.5 rounded-lg ml-50 text-sm font-medium text-white hover:bg-blue-600 transition"
+                onClick={switchRole}
+              >
+                {user.role === "finder" ? "Switch to Provider" : "Switch to Finder"}
               </button>
-            ) : (
-              <button className="role-switch-btn" onClick={switchRole}>
-                Switch to Finder
-              </button>
-            )}
-            
-            </>
+
+            </div>
           )}
+
         </div>
-          <div className="auth-section">
-      {user ? (
-        <div 
-          className="profile-wrapper"
-          onMouseEnter={() => setOpen(true)}
-          onMouseLeave={() => setOpen(false)}
-        >
-          <div className="profile-trigger">
-           <FaUserCircle size={26} color="#a9ac9e" />
-            <span className="username">
-            @{username?.charAt(0) + username?.slice(1)}
-          </span>
-          </div>
+        <div className="auth-section flex items-center gap-4">
 
-          {open && (
-           <div className="profile-dropdown">
-            <Link to="/profile">
-              <FaUser className="menu-icon" />
-              Account
-            </Link>
+          {user ? (
 
-            <Link to="/my-bookings">
-              <FaClipboardList className="menu-icon" />
-              My Bookings
-            </Link>
+            <div
+              ref={dropdownRef}
+              className="profile-wrapper relative"
+              onClick={() => setOpen(!open) }
+            >
 
-            <Link to="/history">
-              <FaHistory className="menu-icon" />
-              History
-            </Link>
+              <div className="profile-trigger flex items-center gap-2 cursor-pointer">
 
-            <Link to="/terms">
-              <FaFileAlt className="menu-icon" />
-              Terms and conditions
-            </Link>
+                <FaUserCircle size={28} className="text-gray-500"/>
 
-            <button onClick={handleLogout}>
-              <FaArrowRight className="menu-icon" />
-              Sign out
-            </button>
+                <span className="username text-sm font-semibold text-gray-700">
+                  @{username?.charAt(0) + username?.slice(1)}
+                </span>
 
-          </div>
-          )}
-        </div>
-      ) : (
+              </div>
+
+              {open && (
+
+                <div className="profile-dropdown absolute right-0 mt-3 w-56 bg-white shadow-xl border rounded-xl overflow-hidden animate-dropdown">
+
+                  <Link to="/profile" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100">
+                    <FaUser className="menu-icon"/>
+                    Account
+                  </Link>
+
+                  <Link to="/my-bookings" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100">
+                    <FaClipboardList className="menu-icon"/>
+                    My Bookings
+                  </Link>
+
+                  <Link to="/history" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100">
+                    <FaHistory className="menu-icon"/>
+                    History
+                  </Link>
+
+                  <Link to="/terms" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100">
+                    <FaFileAlt className="menu-icon"/>
+                    Terms and conditions
+                  </Link>
+
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center gap-3 px-4 py-3 w-full text-left hover:bg-gray-100"
+                  >
+                    <FaArrowRight className="menu-icon"/>
+                    Sign out
+                  </button>
+
+                </div>
+
+              )}
+
+            </div>
+
+          ) : (
+
             <button
               onClick={onLoginClick}
-              className="login-btn"
+              className="login-btn px-4 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition"
             >
               Sign In
             </button>
+
           )}
+
+          <button
+            className="lg:hidden text-gray-700"
+            onClick={() => setMobileMenu(!mobileMenu)}
+          >
+            {mobileMenu ? <FaTimes size={22}/> : <FaBars size={22}/>}
+          </button>
+
         </div>
 
       </div>
+
+      {mobileMenu && (
+
+        <div className="lg:hidden bg-white border-t px-6 py-4 flex flex-col gap-4 text-gray-700">
+
+          <NavLink to="/">Home</NavLink>
+          <NavLink to="/Services">Services</NavLink>
+          <NavLink to="/emergency">Emergency</NavLink>
+
+          {user && (
+
+            <button
+              className="role-switch-btn bg-blue-500 text-white px-4 py-2 rounded-lg"
+              onClick={switchRole}
+            >
+              {user.role === "finder" ? "Switch to Provider" : "Switch to Finder"}
+            </button>
+
+          )}
+
+        </div>
+
+      )}
+
     </nav>
   );
 };

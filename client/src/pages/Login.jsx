@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import API from "../service/api.js";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { loginStart, loginSuccess, loginFail } from "../features/auth/authSlice";
+import { loginStart, loginSuccess, loginFailure } from "../features/auth/authSlice";
 import "./Login.css";
 
 const Login = ({ setActiveTab, onClose }) => {
@@ -37,18 +37,13 @@ const Login = ({ setActiveTab, onClose }) => {
 
       const { token, user } = res.data;
 
-
-      localStorage.setItem("token", token);
-
-      localStorage.setItem("user", JSON.stringify(user));
-
-      dispatch(loginSuccess(user));
+      dispatch(loginSuccess({ user, token }));
 
       toast.success("Login successful!");
       onClose();
 
       setTimeout(() => {
-        if(res.data.user.role === "provider"){
+        if(user.role === "provider"){
           navigate("/provider-dashboard");
 
         }else{
@@ -58,7 +53,7 @@ const Login = ({ setActiveTab, onClose }) => {
 
     } catch (error) {
 
-      dispatch(loginFail(error.response?.data?.message));
+      dispatch(loginFailure(error.response?.data?.message));
       toast.error(error.response?.data?.message || "Login failed");
 
     }
@@ -77,8 +72,6 @@ const Login = ({ setActiveTab, onClose }) => {
   </div>
 
 
-  {/* RIGHT SECTION */}
-
   <div className="login-right flex w-full lg:w-1/2 items-start justify-center pt-16 pb-8 px-8">
 
     <div className="login-card w-full max-w-md bg-white shadow-lg rounded-xl p-8">
@@ -94,8 +87,6 @@ const Login = ({ setActiveTab, onClose }) => {
 
       <form onSubmit={handleSubmit} className="space-y-4">
 
-
-        {/* EMAIL */}
 
         <div>
 

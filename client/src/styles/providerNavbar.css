@@ -1,0 +1,53 @@
+.provider-navbar{
+  position: sticky;
+  top:0;
+  width:100%;
+  background: rgba(247,232,232,0.8);
+  backdrop-filter: blur(10px);
+  border-bottom:1px solid #e5e5e5;
+}
+.navbar-container{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 25px;
+}
+
+.logo{
+  letter-spacing: 0.5px;
+
+  font-size:20px;
+  font-weight:600;
+  color:#107a3d;
+}
+.logo-link{
+    color:#107a3d;
+      top:18px;
+
+}
+.navbar-right{
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+.switch-btn{
+  background-color:#107a3d;
+  color:white;
+  padding:8px 16px;
+  border-radius:10px;
+  font-weight:500;
+  transition:0.3s;
+}
+
+.switch-btn:hover{
+  background:#0f6b35;
+}
+
+
+.profile-icon{
+  transition: all 0.3s ease;
+}
+
+.profile-icon:hover{
+  transform: scale(1.08);
+}

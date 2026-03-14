@@ -14,10 +14,8 @@ const AuthModal = ({ isOpen, onClose }) => {
         className="auth-modal"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* CLOSE BUTTON */}
         <span className="close-btn" onClick={onClose}>✕</span>
 
-        {/* HEADER */}
         <div className="auth-header">
           <button
             className={activeTab === "login" ? "active" : ""}
@@ -34,7 +32,6 @@ const AuthModal = ({ isOpen, onClose }) => {
           </button>
         </div>
 
-        {/* CONTENT */}
         <div className="auth-content">
           {activeTab === "login" ? (
             <Login onClose={onClose} setActiveTab={setActiveTab} />

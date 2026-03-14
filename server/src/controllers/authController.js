@@ -38,10 +38,10 @@
 
             res.status(201).json({
                 success: true,
-                messaage: "Registration successful",
+                message: "Registration successful",
                 token: generateToken(user._id),
                 user: {
-                    id: user._id,
+                    _id: user._id,
                     fullName: user.fullName,
                     phoneNumber: user.phoneNumber,
                     email:user.email,
@@ -63,25 +63,24 @@
 
             if(!user) {
                 res.status(401);
-                throw new Error("Invalid credentials!");
+                throw new Error("User not found!");
             }
 
             const isMatch = await bcrypt.compare(password, user.password);
 
             if(!isMatch){
                 res.status(401);
-                throw new Error("Invalid credentials!");
+                throw new Error("Password not match!");
             }
             res.json({
                 success: true,
                 message: "Login successful",
-                token: generateToken(user._id),
                 user: {
-                id: user._id,
+                _id: user._id,
                 fullName: user.fullName,
                 email: user.email,
-                phoneNumber: user.phoneNumber,
                 role: user.role,
                 },
+                  token: generateToken(user._id),
             });
         })
