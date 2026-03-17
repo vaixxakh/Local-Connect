@@ -1,11 +1,12 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
-const MainLayout = ({onLoginClick}) => {
+const MainLayout = ({ onLoginClick }) => {
   return (
     <>
-       <Navbar onLoginClick={onLoginClick} />
-      <div className="container">
+      <Navbar onLoginClick={onLoginClick} />
+
+      <div >
         <Outlet />
       </div>
     </>

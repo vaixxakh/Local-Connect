@@ -77,8 +77,7 @@ const Navbar = ({ onLoginClick }) => {
   return (
     <nav className="navbar w-full backdrop-blur-lg bg-white/80 border-b border-gray-200 sticky top-0 z-50">
 
-      <div className="navbar-container max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
-
+     <div className="navbar-container w-full flex items-center justify-between px-6 py-3">
         <Link to="/" className="logo text-xl font-bold   tracking-wide py-2 ">
           LocalConnect
         </Link>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getUserBookings } from "../../service/bookingService";
+import { getUserBookings } from "../../pages/bookingService";
 
 const BookingHistory = ({ userId }) => {
 

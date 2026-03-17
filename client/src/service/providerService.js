@@ -1,8 +1,24 @@
-import axios from "axios";
+import API from "../service/api.js";
 
-const API = "http://localhost:5000/api/providers";
 
-export const fetchProviders = async (params) => {
-  const response = await axios.get(API, { params });
-  return response.data.data;
+
+
+export const getMyProfile = async () => {
+  const res = await API.get("/provider/profile");
+  return res.data;
+};
+
+export const saveProfile = async (data) => {
+  const res = await API.post("/provider/profile", data);
+  return res.data;
+};
+
+export const fetchProviders = async () => {
+  const res = await API.get("/provider");
+  return res.data;
+};
+
+export const getProviderById = async (id) => {
+  const res = await API.get(`/provider/${id}`);
+  return res.data;
 };

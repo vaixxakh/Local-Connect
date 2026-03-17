@@ -23,8 +23,8 @@ app.get("/", (req, res) => {
 app.use("/uploads", express.static("uploads"));
 
 app.use("/api/auth", authRoutes);
-app.use("/api/providers", providerRoutes);
-app.use("/api/bookings", bookingRoutes);
+app.use("/api/provider", providerRoutes);
+app.use("/api/booking", bookingRoutes);
 app.use("/api/users", userRoutes);
 
 module.exports = app;

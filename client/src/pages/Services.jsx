@@ -18,7 +18,7 @@ const ProvidersPage = () => {
   useEffect(() => {
     const loadProviders = async () => {
       const data = await fetchProviders(filters);
-      setProviders(data);
+      setProviders(data.providers);
     };
 
     loadProviders();
@@ -34,7 +34,7 @@ const ProvidersPage = () => {
         <ServiceSidebar filters={filters} setFilters={setFilters} />
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 flex-1">
-          {providers.map((provider) => (
+          {providers?.map((provider) => (
             <ServiceCard key={provider._id} provider={provider} />
           ))}
         </div>

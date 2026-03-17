@@ -9,40 +9,43 @@ import { useNavigate } from "react-router-dom";
 function App() {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const openAuth = () => setIsAuthOpen(true);
-  const navigate = useNavigate();
   const closeAuth = () => setIsAuthOpen(false);
+
+  const navigate = useNavigate();
   const role = localStorage.getItem("role");
 
-  { role !== "provider" && <MainLayout/>}
-
-      useEffect(()=>{
-
-      if(role==="provider"){
-      navigate("/provider-dashboard")
-      }
-
-      },[])
+  useEffect(() => {
+    if (role === "provider") {
+      navigate("/provider-dashboard");
+    }
+  }, []);
 
   return (
     <>
-    <AppRoutes onLoginClick={openAuth} />
-    <AuthModal isOpen={isAuthOpen} onClose={closeAuth} />
-    <Toaster
+      {role !== "provider" ? (
+        
+          <AppRoutes onLoginClick={openAuth} />
+       
+      ) : (
+        <AppRoutes onLoginClick={openAuth} />
+      )}
+
+      <AuthModal isOpen={isAuthOpen} onClose={closeAuth} />
+
+      <Toaster
         position="bottom-center"
         containerStyle={{ bottom: "80px" }}
         toastOptions={{
-        duration: 3000,
-        style: {
-          background: "#725c5c38",
-          color: "#043117",
-          borderRadius: "10px",
-          padding: "12px 16px",
-        },
-      }}
-    />
-
+          duration: 3000,
+          style: {
+            background: "#725c5c38",
+            color: "#043117",
+            borderRadius: "10px",
+            padding: "12px 16px",
+          },
+        }}
+      />
     </>
   );
 }
-
 export default App;
