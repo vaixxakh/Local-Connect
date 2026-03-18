@@ -54,11 +54,11 @@
             
             const { email, password } = req.body;
 
-              if (!email || !password) {
+            if (!email || !password) {
                 res.status(400);
                 throw new Error("Email and password are required");
             }
-
+            
             const user = await User.findOne({ email });
 
             if(!user) {

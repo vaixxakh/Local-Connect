@@ -24,7 +24,7 @@ const providerSchema = new mongoose.Schema({
   selfieImage: String,
   isVerified: {
     type: Boolean,
-    default: false,
+    default: true,
   },
 
 
@@ -82,7 +82,7 @@ const providerSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ["online", "offline", "busy"],
-    default: "offline",
+    default: "online",
   },
 
 }, { timestamps: true });

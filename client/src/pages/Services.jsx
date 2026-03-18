@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import ServiceSearchBar from "../components/servicesPage/ServiceSearchBar";
 import ServiceSidebar from "../components/servicesPage/ServiceSideBar";
-import ServiceCard from "../components/popularService/ServiceCard";
 import { fetchProviders } from "../service/providerService";
 import "./Services.css";
+import ProviderCard from "../components/servicesPage/ProviderCard";
 
 const ProvidersPage = () => {
   const [providers, setProviders] = useState([]);
@@ -18,6 +18,7 @@ const ProvidersPage = () => {
   useEffect(() => {
     const loadProviders = async () => {
       const data = await fetchProviders(filters);
+      console.log("API Response:", data);
       setProviders(data.providers);
     };
 
@@ -35,7 +36,7 @@ const ProvidersPage = () => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 flex-1">
           {providers?.map((provider) => (
-            <ServiceCard key={provider._id} provider={provider} />
+            <ProviderCard key={provider._id} provider={provider} />
           ))}
         </div>
 

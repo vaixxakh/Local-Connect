@@ -34,7 +34,7 @@ const Login = ({ setActiveTab, onClose }) => {
       dispatch(loginStart());
 
       const res = await API.post("/auth/login", formData);
-
+    
       const { token, user } = res.data;
 
       dispatch(loginSuccess({ user, token }));
@@ -52,7 +52,6 @@ const Login = ({ setActiveTab, onClose }) => {
       }, 1000);
 
     } catch (error) {
-
       dispatch(loginFailure(error.response?.data?.message));
       toast.error(error.response?.data?.message || "Login failed");
 
