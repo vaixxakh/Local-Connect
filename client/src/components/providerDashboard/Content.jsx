@@ -2,6 +2,7 @@ import { FaClipboardList, FaCheckCircle, FaClock, FaRupeeSign,FaUserCircle } fro
 import StatsCard from "../../components/providerDashboard/StatsCard";
 import { useState } from "react";
 import Profile from "../../components/providerDashboard/Profile";
+import AvailabilityToggle from "../../components/providerDashboard/AvailabilityToggle";
 
 const Content = () => {
     const [openProfile, setOpenProfile] = useState(false);
@@ -64,6 +65,9 @@ const Content = () => {
           icon={<FaRupeeSign />}
           color="text-green-700"
         />
+
+               <AvailabilityToggle />
+
 
       </div>
 

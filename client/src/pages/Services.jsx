@@ -5,44 +5,41 @@ import { fetchProviders } from "../service/providerService";
 import "./Services.css";
 import ProviderCard from "../components/servicesPage/ProviderCard";
 
-const ProvidersPage = () => {
-  const [providers, setProviders] = useState([]);
+const ServiceProviders = ({ service }) => {
+const [providers, setProviders] = useState([]);
+
   const [filters, setFilters] = useState({
     search: "",
     location: "",
-    category: "",
+    category: service || "",
     rating: "",
     available: false,
   });
 
   useEffect(() => {
     const loadProviders = async () => {
-      const data = await fetchProviders(filters);
-      console.log("API Response:", data);
-      setProviders(data.providers);
+      const res = await fetchProviders(service);
+      setProviders(res.data || []);
     };
 
     loadProviders();
-  }, [filters]);
+  }, [service]);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-
+     <div className="min-h-screen bg-gray-100 p-8">
       <ServiceSearchBar filters={filters} setFilters={setFilters} />
 
       <div className="flex gap-8 mt-6">
-
         <ServiceSidebar filters={filters} setFilters={setFilters} />
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 flex-1">
-          {providers?.map((provider) => (
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          {providers.map((provider) => (
             <ProviderCard key={provider._id} provider={provider} />
           ))}
         </div>
-
       </div>
     </div>
   );
 };
 
-export default ProvidersPage;
+export default ServiceProviders;

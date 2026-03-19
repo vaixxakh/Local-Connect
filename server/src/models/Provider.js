@@ -1,90 +1,155 @@
 const mongoose = require("mongoose");
 
-const providerSchema = new mongoose.Schema({
-  
+const providerSchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+      unique: true,
+    },
 
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    phone: {
+      type: String,
+      trim: true,
+    },
+
+    email: {
+      type: String,
+      trim: true,
+      lowercase: true,
+    },
+
+    profileImage: {
+      type: String,
+      default: "",
+    },
+
+    idProof: {
+      type: String,
+      default: "",
+    },
+
+    idNumber: {
+      type: String,
+      default: "",
+    },
+
+    selfieImage: {
+      type: String,
+      default: "",
+    },
+
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+
+    service: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    subServices: {
+      type: [String],
+      default: [],
+    },
+
+    skills: {
+      type: [String],
+      default: [],
+    },
+
+    experience: {
+      type: Number,
+      default: 0,
+    },
+
+    basePrice: {
+      type: Number,
+      default: 0,
+    },
+
+    visitCharge: {
+      type: Number,
+      default: 0,
+    },
+
+    pricingType: {
+      type: String,
+      enum: ["fixed", "hourly"],
+      default: "fixed",
+    },
+
+    district: {
+      type: String,
+      default: "",
+    },
+
+    city: {
+      type: String,
+      default: "",
+    },
+
+    area: {
+      type: String,
+      default: "",
+    },
+
+    pincode: {
+      type: String,
+      default: "",
+    },
+
+    workingDays: {
+      type: [String],
+      default: [],
+    },
+
+    workingTime: {
+      type: String,
+      default: "",
+    },
+
+    emergencyAvailable: {
+      type: Boolean,
+      default: false,
+    },
+
+    rating: {
+      type: Number,
+      default: 0,
+    },
+
+    totalReviews: {
+      type: Number,
+      default: 0,
+    },
+
+    workImages: {
+      type: [String],
+      default: [],
+    },
+
+    bio: {
+      type: String,
+      default: "",
+    },
+
+    status: {
+      type: String,
+      enum: ["online", "offline", "busy"],
+      default: "online",
+    },
   },
-
-  name: {
-    type: String,
-    required: true,
-  },
-
-  phone: String,
-  email: String,
-  profileImage: String,
-
-
-  idProof: String,      
-  idNumber: String,
-  selfieImage: String,
-  isVerified: {
-    type: Boolean,
-    default: true,
-  },
-
-
-  service: {
-    type: String,
-    required: true,
-  },
-
-  subServices: [String],
-
-  skills: [String],
-
-  experience: {
-    type: Number,
-    default: 0,
-  },
-
-
-  basePrice: Number,
-  visitCharge: Number,
-  pricingType: {
-    type: String,
-    enum: ["fixed", "hourly"],
-    default: "fixed",
-  },
-
-  district: String,
-  city: String,
-  area: String,
-  pincode: String,
-
-
-  workingDays: [String],
-  workingTime: String,
-  emergencyAvailable: {
-    type: Boolean,
-    default: false,
-  },
-
-  rating: {
-    type: Number,
-    default: 0,
-  },
-
-  totalReviews: {
-    type: Number,
-    default: 0,
-  },
-
-
-  workImages: [String],
-
-  bio: String,
-
-  status: {
-    type: String,
-    enum: ["online", "offline", "busy"],
-    default: "online",
-  },
-
-}, { timestamps: true });
+  { timestamps: true }
+);
 
 module.exports = mongoose.model("Provider", providerSchema);

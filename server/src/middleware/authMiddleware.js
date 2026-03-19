@@ -33,7 +33,10 @@ try {
     });
   }
 
-  req.user = user;
+  req.user = {
+     ...user,
+      id: user._id.toString(),
+  }
 
   next();
 
