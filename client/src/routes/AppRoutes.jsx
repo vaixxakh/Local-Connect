@@ -11,8 +11,10 @@ import ProviderDashboard from "../pages/ProviderDashboard";
 import ProviderDetails from "../pages/ProviderDetails";
 import Profile from "../pages/Profile";
 
-import MyBookings from "../pages/MyBookings";
+import Bookings from "../pages/Bookings";
+import PaymentPage from "../pages/PaymentPage";
 import Emergency from "../pages/Emergency";
+import  BookingSuccessPage from "../pages/BookingSuccessPage"
 
 const AppRoutes = ({onLoginClick }) => {
     return (
@@ -39,7 +41,9 @@ const AppRoutes = ({onLoginClick }) => {
             />
           <Route path="/providers/:id" element={<ProviderDetails />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/my-bookings" element={<MyBookings />} />
+          <Route path="/bookings/:providerId" element={<Bookings />} />
+          <Route path="/payment/:bookingId" element={<PaymentPage />} />
+          <Route path="/booking-success/:bookingId" element={<BookingSuccessPage />} />
           <Route path="/emergency" element={<Emergency />} />
         </Route>
 

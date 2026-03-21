@@ -1,71 +1,127 @@
 const Booking = require("../models/Booking");
-const Provider = require("../models/Provider");
-const asyncHandler = require("express-async-handler");
 
 
-exports.createBooking = asyncHandler(async (req, res) => {
-  const { serviceId } = req.body;
+const createBooking = async (req, res) => {
+  try {
+    const {
+      userId,
+      providerId,
+      providerName,
+      serviceName,
+      bookingDate,
+      bookingTime,
+      address,
+      notes,
+      amount,
+    } = req.body;
 
-  if (!serviceId) {
-    res.status(400);
-    throw new Error("Service ID is required");
+    const booking = await Booking.create({
+      userId,
+      providerId,
+      providerName,
+      serviceName,
+      bookingDate,
+      bookingTime,
+      address,
+      notes,
+      amount,
+      paymentStatus: "pending",
+      bookingStatus: "pending",
+    });
+
+    res.status(201).json({
+      success: true,
+      message: "Booking created successfully",
+      booking,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Booking creation failed",
+      error: error.message,
+    });
   }
+};
 
-  const service = await Provider.findById(serviceId);
+const getBookingById = async (req, res) => {
+  try {
+    const booking = await Booking.findById(req.params.id);
 
-  if (!service) {
-    res.status(404);
-    throw new Error("Service not found");
+    if (!booking) {
+      return res.status(404).json({
+        success: false,
+        message: "Booking not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      booking,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error fetching booking",
+      error: error.message,
+    });
   }
+};
 
-  const booking = await Booking.create({
-    service: serviceId,
-    bookedBy: req.user._id,
-  });
 
-  res.status(201).json({
-    success: true,
-    message: "Service booked successfully",
-    data: booking,
-  });
-});
+const updatePaymentStatus = async (req, res) => {
+  try {
+    const booking = await Booking.findByIdAndUpdate(
+      req.params.id,
+      {
+        paymentStatus: "paid",
+        bookingStatus: "confirmed",
+      },
+      { new: true }
+    );
 
-exports.getMyBookings = asyncHandler(async (req, res) => {
-  const bookings = await Booking.find({ bookedBy: req.user._id })
-    .populate("service")
-    .populate("bookedBy", "name email");
-
-  res.status(200).json({
-    success: true,
-    count: bookings.length,
-    data: bookings,
-  });
-});
-
-exports.updateBookingStatus = asyncHandler(async (req, res) => {
-  const { status } = req.body;
-
-  const booking = await Booking.findById(req.params.id)
-    .populate("service");
-
-  if (!booking) {
-    res.status(404);
-    throw new Error("Booking not found");
+    res.status(200).json({
+      success: true,
+      message: "Payment updated successfully",
+      booking,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Payment update failed",
+      error: error.message,
+    });
   }
+};
 
+const updateProviderLocation = async (req, res) => {
+  try {
+    const { lat, lng } = req.body;
 
-  if (booking.service.createdBy.toString() !== req.user._id.toString()) {
-    res.status(403);
-    throw new Error("Not authorized to update this booking");
+    const booking = await Booking.findByIdAndUpdate(
+      req.params.id,
+      {
+        providerLocation: { lat, lng },
+      },
+      { new: true }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Provider location updated",
+      booking,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Location update failed",
+      error: error.message,
+    });
   }
+};
 
-  booking.status = status || booking.status;
-
-  await booking.save();
-
-  res.status(200).json({
-    success: true,
-    message: "Booking status updated",
-    data: booking,
-  });
-});
+module.exports = {
+  createBooking,
+  getBookingById,
+  updatePaymentStatus,
+  updateProviderLocation,
+};

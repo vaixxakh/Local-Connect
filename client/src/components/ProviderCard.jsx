@@ -2,6 +2,7 @@ import "./ProviderCard.css";
 import { FaStar } from "react-icons/fa";
 
 const ProviderCard = ({ provider }) => {
+
   return (
     <div className="provider-card-modern">
 
@@ -26,11 +27,11 @@ const ProviderCard = ({ provider }) => {
       </div>
 
       <p className="location">{provider.location}</p>
-
+{/* 
       <div className="card-actions">
         <button className="profile-btn">Profile</button>
         <button className="call-btn">Call Now</button>
-      </div>
+      </div> */}
 
     </div>
   );

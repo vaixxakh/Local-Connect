@@ -4,9 +4,22 @@ import ServiceSidebar from "../components/servicesPage/ServiceSideBar";
 import { fetchProviders } from "../service/providerService";
 import "./Services.css";
 import ProviderCard from "../components/servicesPage/ProviderCard";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setSelectedProvider } from "../features/booking/bookingSlice";
 
 const ServiceProviders = ({ service }) => {
 const [providers, setProviders] = useState([]);
+
+    const navigate = useNavigate();
+      const dispatch = useDispatch();
+
+
+    const handleBookNow = (provider) => {
+      dispatch(setSelectedProvider(provider));
+      navigate(`/bookings/${provider._id}`);
+    };
+
 
   const [filters, setFilters] = useState({
     search: "",
@@ -34,7 +47,11 @@ const [providers, setProviders] = useState([]);
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {providers.map((provider) => (
-            <ProviderCard key={provider._id} provider={provider} />
+            <ProviderCard 
+            key={provider._id}
+            provider={provider}
+            onBookNow={handleBookNow}
+             />
           ))}
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getUserBookings } from "../../pages/bookingService";
+import { getBookingByIdApi } from "../../service/bookingApi";
 
 const BookingHistory = ({ userId }) => {
 
@@ -12,7 +12,7 @@ const BookingHistory = ({ userId }) => {
 
       try {
 
-        const data = await getUserBookings(userId);
+        const data = await getBookingByIdApi(userId);
 
         setBookings(data);
 

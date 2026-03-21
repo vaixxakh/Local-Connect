@@ -1,6 +1,9 @@
+import { FaStar } from "react-icons/fa";
 import "../../components/servicesPage/Providercard.css";
 
+
 const ProviderCard = ({ provider, onBookNow, onViewProfile }) => {
+
   const status = provider?.status || "offline";
 
   return (
@@ -81,7 +84,7 @@ const ProviderCard = ({ provider, onBookNow, onViewProfile }) => {
             </p>
 
             <p className="provider-card__rating">
-              ⭐ {provider?.rating || 0}
+              <FaStar color="gold" /> {provider?.rating || 0}
               <span>
                 {" "}
                 ({provider?.totalReviews || 0} reviews)
@@ -91,7 +94,7 @@ const ProviderCard = ({ provider, onBookNow, onViewProfile }) => {
 
           <div className="provider-card__actions">
             <button
-              onClick={() => onBookNow && onBookNow(provider)}
+              onClick={() =>  onBookNow(provider)}
               className="provider-card__btn provider-card__btn--primary"
             >
               Book Now
