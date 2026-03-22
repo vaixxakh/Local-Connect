@@ -62,25 +62,30 @@ position:relative;
 }
 
 .password-field span{
-position:absolute;
+
 right:10px;
-top:12px;
+top:25px;
 cursor:pointer;
 }
 
-.remember{
-display:flex;
-align-items:center;
-gap:8px;
-font-size:14px;
-color:#555;
-margin-bottom:15px;
+.remember {
+  display: flex;
+  align-items: center;
+  gap: 6px; 
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 15px;
 }
 
-.remember-checkbox{
-width:16px;
-height:16px;
-cursor:pointer;
+.remember input {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  margin: 0;
+}
+
+.remember span {
+  margin: 0;
 }
 .primary-btn{
 width:100%;

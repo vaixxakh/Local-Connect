@@ -72,7 +72,7 @@ const Register = ({ onClose }) => {
         </h1>
 
       </div>
-      <div className="register-right flex w-full lg:w-1/2 items-start justify-center pt-0 px-10">
+      <div className="register-right flex w-full lg:w-1/2 items-center justify-center px-6">
 
         <form
         onSubmit={handleSubmit}

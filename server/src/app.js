@@ -1,5 +1,8 @@
 const express = require("express");
 const cors = require("cors");
+const http = require("http");
+
+const { initSocket }  = require("./config/socket")
 
 const authRoutes = require("./routes/authRoutes");
 const providerRoutes = require("./routes/providerRoutes");

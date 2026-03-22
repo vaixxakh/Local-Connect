@@ -10,10 +10,10 @@
   z-index:999;
 }
 
-/* MODAL */
+
 .auth-modal{
   width:900px;
-  height:550px;
+  max-height:90vh;  
   background:#fff;
   border-radius:20px;
   overflow:hidden;
@@ -22,7 +22,6 @@
   flex-direction:column;
 }
 
-/* CLOSE BUTTON */
 .close-btn{
   position:absolute;
   right:20px;
@@ -32,7 +31,6 @@
   z-index:5;
 }
 
-/* HEADER */
 .auth-header{
   display:flex;
   justify-content:center;
@@ -58,4 +56,5 @@
 .auth-content{
   flex:1;
   display:flex;
+  height:100%; 
 }

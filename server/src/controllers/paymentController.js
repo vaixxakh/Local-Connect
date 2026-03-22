@@ -23,7 +23,7 @@ exports.createRazorpayOrder = async (req, res) => {
     }
 
     const options = {
-      amount: booking.amount * 100, // paise
+      amount: booking.amount * 100, 
       currency: "INR",
       receipt: `receipt_${booking._id}`,
       notes: {
@@ -75,7 +75,7 @@ exports.verifyRazorpayPayment = async (req, res) => {
     }
 
     const generatedSignature = crypto
-      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+      .createHmac("sha256", process.env.VITE_RAZORPAY_KEY_SECRET)
       .update(`${razorpay_order_id}|${razorpay_payment_id}`)
       .digest("hex");
 
