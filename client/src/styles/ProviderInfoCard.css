@@ -1,0 +1,148 @@
+/* MAIN CARD */
+.provider-card{
+  position:relative;
+  padding:24px;
+  border-radius:20px;
+  background:linear-gradient(145deg, #ffffff, #eef2f7);
+  box-shadow:
+    8px 8px 20px rgba(0,0,0,0.08),
+    -8px -8px 20px rgba(255,255,255,0.9);
+  overflow:hidden;
+  transition:all 0.4s ease;
+}
+
+/* 3D HOVER EFFECT */
+.provider-card:hover{
+  transform:translateY(-8px) scale(1.02);
+  box-shadow:
+    12px 12px 30px rgba(0,0,0,0.12),
+    -6px -6px 20px rgba(255,255,255,0.9);
+}
+
+/* GRADIENT ANIMATED BORDER */
+.provider-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:20px;
+  padding:2px;
+  background:linear-gradient(120deg, #3b82f6, #22c55e, #9333ea, #3b82f6);
+  background-size:300% 300%;
+  animation:gradientMove 6s linear infinite;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+}
+
+@keyframes gradientMove{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+/* GLOW EFFECT */
+.provider-card::after{
+  content:"";
+  position:absolute;
+  width:200%;
+  height:200%;
+  background:radial-gradient(circle, rgba(59,130,246,0.15), transparent 60%);
+  top:-50%;
+  left:-50%;
+  transform:rotate(25deg);
+  opacity:0;
+  transition:0.5s;
+}
+
+.provider-card:hover::after{
+  opacity:1;
+}
+
+/* TITLE */
+.title{
+  font-size:18px;
+  font-weight:700;
+  margin-bottom:16px;
+  color:#111827;
+}
+
+/* PROFILE SECTION */
+.profile-section{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+/* PROFILE IMAGE */
+.profile-img{
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  object-fit:cover;
+  border:3px solid #fff;
+  box-shadow:0 4px 10px rgba(0,0,0,0.15);
+  transition:0.3s;
+}
+
+/* IMAGE HOVER */
+.provider-card:hover .profile-img{
+  transform:scale(1.1) rotate(2deg);
+}
+
+/* INFO */
+.info{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
+/* NAME */
+.name{
+  font-size:16px;
+  font-weight:600;
+  color:#111827;
+}
+
+/* PHONE */
+.phone{
+  font-size:14px;
+  color:#6b7280;
+}
+
+/* STATUS BADGE */
+.status-badge{
+  margin-top:6px;
+  background:rgba(34,197,94,0.1);
+  color:#16a34a;
+  font-size:12px;
+  padding:4px 10px;
+  border-radius:999px;
+  width:fit-content;
+  font-weight:600;
+  animation:pulse 2s infinite;
+}
+
+/* PULSE ANIMATION */
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(34,197,94,0.4);}
+  70%{box-shadow:0 0 0 8px rgba(34,197,94,0);}
+  100%{box-shadow:0 0 0 0 rgba(34,197,94,0);}
+}
+
+/* ENTRY ANIMATION */
+.provider-card{
+  animation:fadeUp 0.6s ease;
+}
+
+@keyframes fadeUp{
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}

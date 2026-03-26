@@ -3,8 +3,15 @@ const Booking = require("../models/Booking");
 
 const createBooking = async (req, res) => {
   try {
+
+      if (!req.user || !req.user.id) {
+        return res.status(401).json({
+          success: false,
+          message: "Unauthorized - user not found",
+        });
+      }
+
     const {
-      userId,
       providerId,
       providerName,
       serviceName,
@@ -13,10 +20,19 @@ const createBooking = async (req, res) => {
       address,
       notes,
       amount,
+      providerLocation,
     } = req.body;
 
+    if (!providerId || !serviceName || !bookingDate || !bookingTime || !address || !amount) {
+      return res.status(400).json({
+        success: false,
+        message: "Missing required fields",
+      });
+    }
+
+
     const booking = await Booking.create({
-      userId,
+      userId: req.user.id,
       providerId,
       providerName,
       serviceName,
@@ -25,6 +41,7 @@ const createBooking = async (req, res) => {
       address,
       notes,
       amount,
+      providerLocation: providerLocation || undefined,
       paymentStatus: "pending",
       bookingStatus: "pending",
     });
@@ -45,7 +62,10 @@ const createBooking = async (req, res) => {
 
 const getBookingById = async (req, res) => {
   try {
-    const booking = await Booking.findById(req.params.id);
+    const booking = await Booking.findById(req.params.id)
+    .populate("providerId", "name phone profileImage")
+    .populate("userId", "fullName");
+    console.log("Booking ID:", req.params.id);
 
     if (!booking) {
       return res.status(404).json({

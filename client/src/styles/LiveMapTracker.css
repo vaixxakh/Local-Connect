@@ -1,0 +1,127 @@
+/* Wrapper */
+.map-wrapper {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive height */
+@media (min-width: 768px) {
+  .map-wrapper {
+    height: 400px;
+  }
+}
+
+/* Map container */
+.map-container {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Smooth map loading animation */
+.map-container {
+  animation: fadeInMap 0.6s ease-in-out;
+}
+
+@keyframes fadeInMap {
+  from {
+    opacity: 0;
+    transform: scale(1.02);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Polyline style (route line) */
+.map-polyline {
+  stroke: #2563eb; /* Tailwind blue-600 */
+  stroke-width: 4;
+  stroke-dasharray: 10;
+  animation: moveLine 1s linear infinite;
+}
+
+@keyframes moveLine {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+/* Live badge */
+.live-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  backdrop-filter: blur(6px);
+  z-index: 999;
+}
+
+/* Blinking dot */
+.live-dot {
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(1.6);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Loading UI */
+.map-loading-container {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  background: #0f172a; /* dark */
+  border-radius: 16px;
+}
+
+.map-loader {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #334155;
+  border-top: 4px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.map-loading-text {
+  color: #cbd5f5;
+  font-size: 14px;
+}
+
+/* Loader animation */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

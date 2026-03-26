@@ -24,6 +24,9 @@ const initSocket = (server) => {
     socket.on("booking-status-update", ({ bookingId, status }) => {
       io.to(bookingId).emit("booking-status", status);
     });
+    socket.on("send-message", ({ bookingId, message }) => {
+      io.to(bookingId).emit("receive-message", message);
+    });
 
     socket.on("disconnect", () => {
       console.log("User disconnected:", socket.id);

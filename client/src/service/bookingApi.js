@@ -1,14 +1,11 @@
-import axios from "axios";
+import API from "./api";  
 
-const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL  + "/api/bookings",
-});
+export const createBookingApi = (data) => API.post("/bookings", data);
 
-export const createBookingApi = (data) => API.post("/", data);
+export const getBookingByIdApi = (id) => API.get(`/bookings/${id}`);
 
-export const getBookingByIdApi = (id) => API.get(`/${id}`);
-
-export const updatePaymentApi = (id) => API.put(`/${id}/payment`);
+export const updatePaymentApi = (id) =>
+  API.put(`/bookings/${id}/payment`);
 
 export const updateProviderLocationApi = (id, data) =>
-  API.put(`/${id}/location`, data);
+  API.put(`/bookings/${id}/location`, data);

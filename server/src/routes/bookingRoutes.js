@@ -8,9 +8,11 @@ const {
   updateProviderLocation,
 } = require("../controllers/bookingController");
 
+const { protect } = require("../middleware/authMiddleware")
 
-router.post("/", createBooking);
-router.get("/:id", getBookingById);
+
+router.post("/", protect,  createBooking);
+router.get("/:id",protect, getBookingById);
 router.put("/:id/payment", updatePaymentStatus);
 router.put("/:id/location", updateProviderLocation);
 

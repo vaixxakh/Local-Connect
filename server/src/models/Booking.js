@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
  const bookingSchema = new mongoose.Schema(
     {
-         userId: {
+      userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       default: null,
@@ -21,7 +21,7 @@ const mongoose = require("mongoose");
       required: true,
     },
     bookingDate: {
-      type: String,
+      type: Date,
       required: true,
     },
     bookingTime: {
@@ -32,9 +32,18 @@ const mongoose = require("mongoose");
       type: String,
       required: true,
     },
+      city: String,
+      pincode: String,
     notes: {
       type: String,
       default: "",
+    },
+     pricing: {
+      basePrice: Number,
+      distanceKm: Number,
+      distanceCharge: Number,
+      platformFee: Number,
+      totalAmount: Number,
     },
     amount: {
       type: Number,
@@ -50,27 +59,32 @@ const mongoose = require("mongoose");
       enum: ["pending", "confirmed", "on_the_way", "completed", "cancelled"],
       default: "pending",
     },
-    providerLocation: {
-      lat: { type: Number, default: 0 },
-      lng: { type: Number, default: 0 },
+   providerLocation: {
+      lat: Number,
+      lng: Number,
     },
+    location: {
+      type: {
+        type: String,
+        enum: ["Point"],
+        default: "Point",
+      },
+      coordinates: {
+        type: [Number],
+        default: [0, 0],
+      },
+    },
+    
     paymentMethod: {
       type: String,
       default: "razorpay",
     },
-    razorpayOrderId: {
-      type: String,
-      default: "",
-    },
-    razorpayPaymentId: {
-      type: String,
-      default: "",
-    },
-    razorpaySignature: {
-      type: String,
-      default: "",
-    },
-    },
-    {timestamps: true}
+
+    razorpayOrderId: String,
+    razorpayPaymentId: String,
+    razorpaySignature: String,
+  },
+  { timestamps: true }
  );
+ bookingSchema.index({ location: "2dsphere" });
  module.exports = mongoose.model("Booking", bookingSchema);

@@ -1,0 +1,94 @@
+/* MAIN CARD */
+.payment-card{
+  background: linear-gradient(145deg, #ffffff, #f0f3f7);
+  padding: 24px;
+  border-radius: 18px;
+  box-shadow: 
+    8px 8px 20px rgba(0,0,0,0.08),
+    -8px -8px 20px rgba(255,255,255,0.9);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* HOVER 3D EFFECT */
+.payment-card:hover{
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 
+    12px 12px 30px rgba(0,0,0,0.12),
+    -6px -6px 20px rgba(255,255,255,0.9);
+}
+
+/* LIGHT GLOW EFFECT */
+.payment-card::before{
+  content:"";
+  position:absolute;
+  top:-50%;
+  left:-50%;
+  width:200%;
+  height:200%;
+  background: radial-gradient(circle, rgba(37,99,235,0.15), transparent 60%);
+  transform: rotate(25deg);
+  opacity:0;
+  transition:0.5s;
+}
+
+.payment-card:hover::before{
+  opacity:1;
+}
+
+/* ROW STYLE */
+.payment-row{
+  display:flex;
+  justify-content:space-between;
+  font-size:15px;
+  color:#4b5563;
+  transition:0.3s;
+}
+
+.payment-row:hover{
+  transform: translateX(4px);
+  color:#111827;
+}
+
+/* STATUS BADGE */
+.status{
+  color:#16a34a;
+  font-weight:600;
+  background:rgba(22,163,74,0.1);
+  padding:4px 10px;
+  border-radius:999px;
+  font-size:13px;
+}
+
+/* DIVIDER */
+.divider{
+  height:1px;
+  background:linear-gradient(to right, transparent, #d1d5db, transparent);
+  margin:18px 0;
+}
+
+/* TOTAL ROW */
+.total-row{
+  display:flex;
+  justify-content:space-between;
+  font-size:18px;
+  font-weight:700;
+  color:#111827;
+}
+
+/* ENTRY ANIMATION */
+.payment-card{
+  animation:fadeSlide 0.5s ease;
+}
+
+@keyframes fadeSlide{
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}

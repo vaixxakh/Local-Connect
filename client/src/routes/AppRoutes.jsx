@@ -8,7 +8,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Services from "../pages/Services"
 import ProviderDashboard from "../pages/ProviderDashboard";
-import ProviderDetails from "../pages/ProviderDetails";
+import ProviderTrackingPage from "../pages/ProviderTrackingPage";
 import Profile from "../pages/Profile";
 
 import Bookings from "../pages/Bookings";
@@ -39,7 +39,7 @@ const AppRoutes = ({onLoginClick }) => {
                 </ProviderRoute>
                 }
             />
-          <Route path="/providers/:id" element={<ProviderDetails />} />
+          <Route path="/provider-tracking/:id" element={<ProviderTrackingPage />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/bookings/:providerId" element={<Bookings />} />
           <Route path="/payment/:bookingId" element={<PaymentPage />} />

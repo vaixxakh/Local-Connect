@@ -179,7 +179,7 @@ const BookingPage = () => {
         providerId: selectedProvider._id,
         providerName: selectedProvider.name,
         serviceName: selectedProvider.service,
-        bookingDate: bookingForm.bookingDate,
+        bookingDate: new Date(bookingForm.bookingDate),
         bookingTime: bookingForm.bookingTime,
         address: bookingForm.address,
         notes: bookingForm.notes,
@@ -191,13 +191,19 @@ const BookingPage = () => {
           platformFee: pricing.platformFee,
           totalAmount: pricing.totalAmount,
         },
-        userLocation: userCoords
-          ? {
-              lat: userCoords.lat,
-              lng: userCoords.lng,
-            }
-          : null,
-      };
+
+          providerLocation: {
+          lat: selectedProvider.location?.lat,
+          lng: selectedProvider.location?.lng,
+        },
+
+          location: userCoords
+    ? {
+        type: "Point",
+        coordinates: [userCoords.lng, userCoords.lat],
+      }
+    : undefined,
+};
 
       const res = await createBookingApi(payload);
       const bookingId = res.data.booking._id;
