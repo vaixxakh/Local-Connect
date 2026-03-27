@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, } from "react";
 import { useParams } from "react-router-dom";
+
+
 import socket from "../socket/socket";
 import API from "../service/api";
 import BookingStatusCard from "../components/BookingSuccessPage/BookingStatusCard";
@@ -7,13 +9,16 @@ import LiveMapTracker from "../components/BookingSuccessPage/LiveMapTracker";
 import ProviderInfoCard from "../components/BookingSuccessPage/ProviderInfoCard";
 import ChatBox from "../components/BookingSuccessPage/ChatBox";
 import PaymentDetails from "../components/BookingSuccessPage/PaymentDetails";
-import { FaMailBulk } from "react-icons/fa";
+
 
 const BookingSuccessPage = () => {
   const { bookingId } = useParams();
 
   const [booking, setBooking] = useState(null);
   const [providerLocation, setProviderLocation] = useState(null);
+
+  
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,52 +49,41 @@ const BookingSuccessPage = () => {
 
   if (!booking) return <p className="text-center mt-10">Loading...</p>;
 
-  return (
-    <div className="min-h-screen bg-gray-100 p-6">
+return (
+  <div className="success-page">
+    <div className="success-container">
 
-
-      <div className="bg-white p-6 rounded-xl shadow mb-6">
+      <div className="card">
         <BookingStatusCard booking={booking} />
       </div>
 
-
-      <div className="grid md:grid-cols-2 gap-6 mb-6">
-
-        <div className="bg-white p-5 rounded-xl shadow">
-          <ProviderInfoCard booking={booking} />
-        </div>
-
-        <div className="bg-white rounded-xl shadow overflow-hidden">
-          <LiveMapTracker
-            userLocation={{
-              lat: booking.location.coordinates[1],
-              lng: booking.location.coordinates[0],
-            }}
-            providerLocation={providerLocation}
-          />
-        </div>
-
+      <div className="card">
+        <ProviderInfoCard booking={booking} />
       </div>
 
-      <div className="bg-white p-6 rounded-xl shadow mb-6">
+      <div className="card">
+        <LiveMapTracker
+          userLocation={{
+            lat: booking.location.coordinates[1],
+            lng: booking.location.coordinates[0],
+          }}
+          providerLocation={providerLocation}
+        />
+      </div>
+
+      <div className="card">
         <PaymentDetails booking={booking} />
       </div>
 
-     
-      <div className="bg-white p-6 rounded-xl shadow mb-6">
-        <FaMailBulk/>
-        <ChatBox bookingId={bookingId} />
-      </div>
+      <ChatBox bookingId={bookingId} />
 
-     
-      <div className="text-center">
-        <button className="bg-gradient-to-r from-blue-500 to-green-500 text-white px-10 py-3 rounded-xl shadow hover:scale-105 transition">
-          Go to My Bookings
-        </button>
-      </div>
+      <button className="main-btn">
+        Go to My Bookings
+      </button>
 
     </div>
-  );
+  </div>
+);
 };
 
 export default BookingSuccessPage;

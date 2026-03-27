@@ -10,10 +10,7 @@ const ProviderInfoCard = ({ booking }) => {
   const provider = booking.providerId;
 
   return (
-    <div className="provider-card group">
-
-      <h3 className="title"> Provider Details</h3>
-
+    <div className="page-wrapper">
       <div className="profile-section">
         <img
           src={provider.profileImage}
@@ -23,7 +20,8 @@ const ProviderInfoCard = ({ booking }) => {
 
         <div className="info">
           <p className="name">{provider.name}</p>
-          <p className="phone">{provider.providerId}</p>
+         <p className="service-name">{booking.serviceName}</p>
+          <p className="phone">ID: {provider._id}</p>
 
           <span className="status-badge">🟢 Available</span>
         </div>

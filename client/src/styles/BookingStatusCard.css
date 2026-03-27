@@ -1,0 +1,105 @@
+/* PAGE */
+.success-page {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #eef2f7, #e0f2fe);
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  padding: 40px 15px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* MAIN CONTAINER */
+.success-container {
+  width: 100%;
+  max-width: 600px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+
+/* REMOVE BOX STYLE (FLAT UI) */
+.card {
+  width: 100%;
+  padding: 16px 10px;
+
+  background: transparent;   /* ❌ no white box */
+  border: none;              /* ❌ no border */
+  box-shadow: none;          /* ❌ no shadow */
+
+  animation: fadeUp 0.5s ease;
+}
+
+
+/* BOOKING CARD */
+.booking-card {
+  position: relative;
+  width: 100%;
+  padding: 24px 10px;
+
+  border-radius: 16px;
+  background: transparent;
+  text-align: center;
+
+  transition: 0.3s;
+}
+
+/* TEXT */
+.status-text {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.service-name {
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #334155;
+}
+
+.address {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #16a34a;
+}
+
+
+/* BUTTON */
+.main-btn {
+  width: 100%;
+  padding: 16px;
+  border-radius: 14px;
+  border: none;
+
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+
+  color: white;
+  background: linear-gradient(90deg, #0ea5e9, #22c55e);
+
+  transition: 0.25s;
+}
+
+.main-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+}
+
+
+/* ANIMATION */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
