@@ -17,10 +17,6 @@ const initSocket = (server) => {
       console.log(`Joined room: ${bookingId}`);
     });
 
-    socket.on("provider-location-update", ({ bookingId, location }) => {
-      io.to(bookingId).emit("location-update", location);
-    });
-
     socket.on("booking-status-update", ({ bookingId, status }) => {
       io.to(bookingId).emit("booking-status", status);
     });
@@ -31,6 +27,17 @@ const initSocket = (server) => {
     socket.on("disconnect", () => {
       console.log("User disconnected:", socket.id);
     });
+   socket.on("send-location", ({ bookingId, lat, lng }) => {
+  if (!bookingId || !lat || !lng) return;
+
+  console.log("📍 RECEIVED:", lat, lng);
+
+  io.to(bookingId).emit("live-location", {
+    lat,
+    lng,
+    timestamp: Date.now(), 
+  });
+});
   });
 
   return io;

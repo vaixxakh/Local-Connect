@@ -27,7 +27,15 @@ const serviceOptions = [
   "Cleaner",
   "AC Technician",
   "Mechanic",
-  "Other",
+  "Teacher",
+  "Web&App development",
+  "Driver",
+  "IT",
+  "Lawyer",
+  "Accountant",
+  "Nurse",
+  "Designer"
+  
 ];
 
 const workingDayOptions = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
