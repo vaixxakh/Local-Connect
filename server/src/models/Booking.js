@@ -20,12 +20,8 @@ const mongoose = require("mongoose");
       type: String,
       required: true,
     },
-    bookingDate: {
+    bookingDateTime: {
       type: Date,
-      required: true,
-    },
-    bookingTime: {
-      type: String,
       required: true,
     },
     address: {
@@ -48,6 +44,7 @@ const mongoose = require("mongoose");
     amount: {
       type: Number,
       required: true,
+      min:0,
     },
     paymentStatus: {
       type: String,
@@ -60,20 +57,26 @@ const mongoose = require("mongoose");
       default: "pending",
     },
    providerLocation: {
-      lat: Number,
-      lng: Number,
+    type: {
+      type: String,
+      enum: ["Point"],
+      default: "Point",
     },
-    location: {
+  coordinates: {
+    type: [Number], 
+  },
+},
+    userLocation: {
       type: {
         type: String,
         enum: ["Point"],
         default: "Point",
       },
-      coordinates: {
+     coordinates: {
         type: [Number],
-        default: [0, 0],
+        required: true,
       },
-    },
+         },
     
     paymentMethod: {
       type: String,
@@ -86,5 +89,6 @@ const mongoose = require("mongoose");
   },
   { timestamps: true }
  );
- bookingSchema.index({ location: "2dsphere" });
+ bookingSchema.index({ userLocation: "2dsphere" });
+ bookingSchema.index({ providerLocation: "2dsphere" });
  module.exports = mongoose.model("Booking", bookingSchema);

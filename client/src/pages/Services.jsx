@@ -7,13 +7,15 @@ import ProviderCard from "../components/servicesPage/ProviderCard";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setSelectedProvider } from "../features/booking/bookingSlice";
+import { useSelector } from "react-redux";
 
 const ServiceProviders = ({ service }) => {
 const [providers, setProviders] = useState([]);
 
-    const navigate = useNavigate();
-      const dispatch = useDispatch();
+const navigate = useNavigate();
+const dispatch = useDispatch();
 
+const { user } = useSelector((state) => state.auth);
 
     const handleBookNow = (provider) => {
       dispatch(setSelectedProvider(provider));
@@ -50,6 +52,7 @@ const [providers, setProviders] = useState([]);
             <ProviderCard 
             key={provider._id}
             provider={provider}
+            user={user  || {} }
             onBookNow={handleBookNow}
              />
           ))}

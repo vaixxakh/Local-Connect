@@ -8,27 +8,40 @@ const ProviderTrackingPage = () => {
   useEffect(() => {
     if (!bookingId) return;
 
+    if (!navigator.geolocation) {
+      console.log("Geolocation not supported");
+      return;
+    }
+
     socket.emit("join-booking-room", bookingId);
+
+    let lastSent = 0;
 
     const watchId = navigator.geolocation.watchPosition(
       (pos) => {
         const lat = pos.coords.latitude;
         const lng = pos.coords.longitude;
 
-        console.log("📡 Sending:", lat, lng);
-     
-        socket.emit("send-location", {
-          bookingId,
-          lat,
-          lng,
-        });
+        const now = Date.now();
+
+        if (now - lastSent > 2000) {
+          lastSent = now;
+
+          console.log("Sending...location:", lat, lng);
+
+          socket.emit("send-location", {
+            bookingId,
+            lat,
+            lng,
+          });
+        }
       },
       (err) => {
-        console.log("❌ Location error:", err);
+        console.log("Location failed:", err.message);
       },
       {
         enableHighAccuracy: true,
-        maximumAge: 5000,
+        maximumAge: 0,
         timeout: 5000,
       }
     );

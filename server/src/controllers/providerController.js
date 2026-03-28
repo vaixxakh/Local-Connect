@@ -2,12 +2,27 @@ const Provider = require("../models/Provider");
 
 exports.getMyProfile = async (req, res) => {
   try {
-    const provider = await Provider.findOne({ user: req.user_id });
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
+
+    const provider = await Provider.findOne({ user: req.user._id });
+
+    if (!provider) {
+      return res.status(404).json({
+        success: false,
+        message: "Provider profile not found",
+      });
+    }
 
     return res.status(200).json({
       success: true,
-      data: provider || null,
+      data: provider,
     });
+
   } catch (error) {
     return res.status(500).json({
       success: false,
@@ -17,12 +32,19 @@ exports.getMyProfile = async (req, res) => {
   }
 };
 
+
 exports.saveProfile = async (req, res) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
+
     const {
       name,
       phone,
-      email,
       service,
       subServices,
       skills,
@@ -38,6 +60,7 @@ exports.saveProfile = async (req, res) => {
       workingTime,
       emergencyAvailable,
       bio,
+      location,
       idNumber,
     } = req.body;
 
@@ -59,20 +82,25 @@ exports.saveProfile = async (req, res) => {
 
     let workImages = provider?.workImages || [];
     if (req.files?.workImages?.length) {
-      const newWorkImages = req.files.workImages.map(
+      workImages = req.files.workImages.map(
         (file) => `${fileBaseUrl}/${file.path.replace(/\\/g, "/")}`
       );
-      workImages = newWorkImages;
     }
 
     const providerData = {
-      user: req.user.id,
+      user: req.user._id,
       name,
       phone,
-      email,
+      email: req.user.email, 
       service,
-      subServices: subServices ? JSON.parse(subServices) : [],
-      skills: skills ? JSON.parse(skills) : [],
+      subServices:
+        typeof subServices === "string"
+          ? JSON.parse(subServices)
+          : subServices || [],
+      skills:
+        typeof skills === "string"
+          ? JSON.parse(skills)
+          : skills || [],
       experience: Number(experience) || 0,
       basePrice: Number(basePrice) || 0,
       visitCharge: Number(visitCharge) || 0,
@@ -81,15 +109,26 @@ exports.saveProfile = async (req, res) => {
       city,
       area,
       pincode,
-      workingDays: workingDays ? JSON.parse(workingDays) : [],
+      workingDays:
+        typeof workingDays === "string"
+          ? JSON.parse(workingDays)
+          : workingDays || [],
       workingTime,
-      emergencyAvailable: emergencyAvailable === "true" || emergencyAvailable === true,
+      emergencyAvailable:
+        emergencyAvailable === "true" || emergencyAvailable === true,
       bio,
       idNumber,
       profileImage,
       selfieImage,
       idProof,
       workImages,
+      location:
+      location?.lat !== undefined && location?.lng !== undefined
+        ? {
+            lat: Number(location.lat),
+            lng: Number(location.lng),
+          }
+        : provider?.location || undefined,
     };
 
     if (provider) {
@@ -107,6 +146,7 @@ exports.saveProfile = async (req, res) => {
       message: "Profile saved successfully",
       data: provider,
     });
+
   } catch (error) {
     return res.status(500).json({
       success: false,
@@ -120,7 +160,9 @@ exports.getProvidersByService = async (req, res) => {
   try {
     const { service } = req.query;
 
-    const filter = service ? { service } : {};
+    const filter = service
+      ? { service: { $regex: new RegExp(service, "i") } }
+      : {};
 
     const providers = await Provider.find(filter).sort({ createdAt: -1 });
 
@@ -129,6 +171,7 @@ exports.getProvidersByService = async (req, res) => {
       count: providers.length,
       data: providers,
     });
+
   } catch (error) {
     return res.status(500).json({
       success: false,
@@ -138,8 +181,16 @@ exports.getProvidersByService = async (req, res) => {
   }
 };
 
+
 exports.updateProviderStatus = async (req, res) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
+
     const { status } = req.body;
 
     if (!["online", "offline", "busy"].includes(status)) {
@@ -155,11 +206,19 @@ exports.updateProviderStatus = async (req, res) => {
       { new: true }
     );
 
+    if (!provider) {
+      return res.status(404).json({
+        success: false,
+        message: "Provider not found",
+      });
+    }
+
     return res.status(200).json({
       success: true,
       message: "Status updated successfully",
       data: provider,
     });
+
   } catch (error) {
     return res.status(500).json({
       success: false,

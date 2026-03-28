@@ -17,7 +17,7 @@ const BookingSuccessPage = () => {
   const [providerLocation, setProviderLocation] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
 
-  // 🟢 FETCH BOOKING DATA
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -26,10 +26,16 @@ const BookingSuccessPage = () => {
 
         setBooking(bookingData);
 
-        // ✅ USER LOCATION (booking time il store cheythath)
-        if (bookingData?.location) {
-          const [lng, lat] = bookingData.location.coordinates;
+      
+        if (bookingData?.userLocation?.coordinates) {
+          const [lng, lat] = bookingData.userLocation.coordinates;
           setUserLocation({ lat, lng });
+        }
+
+
+        if (bookingData?.providerLocation?.coordinates) {
+          const [lng, lat] = bookingData.providerLocation.coordinates;
+          setProviderLocation({ lat, lng });
         }
 
       } catch (err) {
@@ -40,15 +46,13 @@ const BookingSuccessPage = () => {
     fetchData();
   }, [bookingId]);
 
-  // 🟢 SOCKET LIVE TRACKING
+
   useEffect(() => {
     if (!bookingId) return;
 
-    // ✅ join room
     socket.emit("join-booking-room", bookingId);
     console.log("🟢 Joined room:", bookingId);
 
-    // ✅ receive provider location
     const handleLocation = (loc) => {
       console.log("📍 Live Provider:", loc);
 
@@ -65,7 +69,29 @@ const BookingSuccessPage = () => {
     };
   }, [bookingId]);
 
-  // ⏳ LOADING
+
+  useEffect(() => {
+    if (!navigator.geolocation) return;
+
+    const watchId = navigator.geolocation.watchPosition(
+      (pos) => {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+
+        setUserLocation({ lat, lng });
+      },
+      (err) => console.log("❌ Finder location error:", err),
+      {
+        enableHighAccuracy: true,
+        maximumAge: 0,
+        timeout: 5000,
+      }
+    );
+
+    return () => navigator.geolocation.clearWatch(watchId);
+  }, []);
+
+
   if (!booking || !userLocation) {
     return <p className="text-center mt-10">Loading...</p>;
   }
@@ -74,17 +100,14 @@ const BookingSuccessPage = () => {
     <div className="success-page">
       <div className="success-container">
 
-        {/* 🟢 STATUS */}
         <div className="card">
           <BookingStatusCard booking={booking} />
         </div>
 
-        {/* 🟢 PROVIDER DETAILS */}
         <div className="card">
           <ProviderInfoCard booking={booking} />
         </div>
 
-        {/* 🟢 LIVE MAP */}
         <div className="card">
           <LiveMapTracker
             userLocation={userLocation}
@@ -95,7 +118,6 @@ const BookingSuccessPage = () => {
         <div className="card">
           <PaymentDetails booking={booking} />
         </div>
-
 
         <ChatBox bookingId={bookingId} />
 

@@ -159,62 +159,88 @@ const BookingPage = () => {
 
 
   const handleProceedPayment = async () => {
-    if (!selectedProvider) {
-      toast.error("Provider not selected");
-      return;
-    }
+  if (!selectedProvider) {
+    toast.error("Provider not selected");
+    return;
+  }
 
-    if (
-      !bookingForm.bookingDate ||
-      !bookingForm.bookingTime ||
-      !bookingForm.address
-    ) {
-      toast.error("Please complete all booking details");
-      return;
-    }
+  if (
+    !bookingForm.bookingDate ||
+    !bookingForm.bookingTime ||
+    !bookingForm.address
+  ) {
+    toast.error("Please complete all booking details");
+    return;
+  }
 
-    try {
-      const payload = {
-        userId: null,
-        providerId: selectedProvider._id,
-        providerName: selectedProvider.name,
-        serviceName: selectedProvider.service,
-        bookingDate: new Date(bookingForm.bookingDate),
-        bookingTime: bookingForm.bookingTime,
-        address: bookingForm.address,
-        notes: bookingForm.notes,
-        amount: pricing.totalAmount,
-        pricing: {
-          basePrice: pricing.providerBasePrice,
-          distanceKm: Number(pricing.distanceKm.toFixed(2)),
-          distanceCharge: pricing.distanceCharge,
-          platformFee: pricing.platformFee,
-          totalAmount: pricing.totalAmount,
-        },
+  if (!userCoords) {
+    toast.error("Please fetch your location");
+    return;
+  }
 
-          providerLocation: {
-          lat: selectedProvider.location?.lat,
-          lng: selectedProvider.location?.lng,
-        },
+  try {
+   
+    const bookingDateTime = new Date(
+      `${bookingForm.bookingDate}T${bookingForm.bookingTime}`
+    );
 
-          location: userCoords
+    const payload = {
+  providerId: selectedProvider._id,
+  providerName: selectedProvider.name,
+  serviceName: selectedProvider.service,
+
+  bookingDateTime,
+
+  address: bookingForm.address,
+  notes: bookingForm.notes,
+
+  amount: pricing.totalAmount,
+
+  pricing: {
+    basePrice: pricing.providerBasePrice,
+    distanceKm: pricing.distanceKm,
+    distanceCharge: pricing.distanceCharge,
+    platformFee: pricing.platformFee,
+    totalAmount: pricing.totalAmount,
+  },
+
+
+  providerLocation:
+  (selectedProvider?.location?.lat && selectedProvider?.location?.lng)
     ? {
-        type: "Point",
-        coordinates: [userCoords.lng, userCoords.lat],
+        lat: selectedProvider.location.lat,
+        lng: selectedProvider.location.lng,
+      }
+    : (selectedProvider?.lat && selectedProvider?.lng)
+    ? {
+        lat: selectedProvider.lat,
+        lng: selectedProvider.lng,
       }
     : undefined,
+    
+
+  
+  userLocation: {
+    lat: userCoords.lat,
+    lng: userCoords.lng,
+  },
 };
 
-      const res = await createBookingApi(payload);
-      const bookingId = res.data.booking._id;
+    const token = localStorage.getItem("token");
 
-      dispatch(setBookingId(bookingId));
-      navigate(`/payment/${bookingId}`);
-    } catch (error) {
-      console.error("Booking creation failed:", error);
-      toast.error("Booking creation failed");
-    }
-  };
+    const res = await createBookingApi(payload, token);
+
+    const bookingId = res.data.booking._id;
+
+    dispatch(setBookingId(bookingId));
+    navigate(`/payment/${bookingId}`);
+
+  } catch (error) {
+    console.error("Booking creation failed:", error);
+    toast.error("Booking creation failed");
+  }
+};
+console.log("Selected Provider:", selectedProvider);
 
   if (!selectedProvider) {
     return (

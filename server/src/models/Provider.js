@@ -148,6 +148,10 @@ const providerSchema = new mongoose.Schema(
       enum: ["online", "offline", "busy"],
       default: "online",
     },
+    location: {
+      lat: Number,
+      lng: Number,
+    },
   },
   { timestamps: true }
 );

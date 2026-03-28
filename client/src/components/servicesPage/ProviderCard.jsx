@@ -2,9 +2,11 @@ import { FaStar } from "react-icons/fa";
 import "../../components/servicesPage/Providercard.css";
 
 
-const ProviderCard = ({ provider, onBookNow, onViewProfile }) => {
+
+const ProviderCard = ({ provider, onBookNow, user, onViewProfile }) => {
 
   const status = provider?.status || "offline";
+  
 
   return (
     <div className="provider-card">
@@ -93,13 +95,14 @@ const ProviderCard = ({ provider, onBookNow, onViewProfile }) => {
           </div>
 
           <div className="provider-card__actions">
+           {user?.role === "finder" && (
             <button
-              onClick={() =>  onBookNow(provider)}
+              onClick={() => onBookNow(provider)}
               className="provider-card__btn provider-card__btn--primary"
             >
               Book Now
             </button>
-
+          )}
             <button
               onClick={() => onViewProfile && onViewProfile(provider)}
               className="provider-card__btn provider-card__btn--secondary"

@@ -3,11 +3,13 @@
     const jwt = require("jsonwebtoken");
     const asyncHandler = require("express-async-handler");
 
-    const generateToken = (id) => {
-        return jwt.sign({ id }, process.env.JWT_SECRET, {
-            expiresIn: process.env.JWT_EXPIRE || "7d",
-        });
-    };
+    const generateToken = (id, role) => {
+        return jwt.sign(
+            {  id, role   },
+            process.env.JWT_SECRET,
+            { expiresIn: process.env.JWT_EXPIRE || "7d", }
+            );
+        };
 
     exports.registerUser = asyncHandler(async (req, res) => {
 
@@ -39,7 +41,7 @@
             res.status(201).json({
                 success: true,
                 message: "Registration successful",
-                token: generateToken(user._id),
+                token: generateToken(user._id, user.role),
                 user: {
                     _id: user._id,
                     fullName: user.fullName,
@@ -81,6 +83,6 @@
                 email: user.email,
                 role: user.role,
                 },
-                  token: generateToken(user._id),
+                 token: generateToken(user._id, user.role),
             });
         })
