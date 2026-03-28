@@ -44,6 +44,7 @@ exports.saveProfile = async (req, res) => {
 
     const {
       name,
+      location,
       phone,
       service,
       subServices,
@@ -60,9 +61,11 @@ exports.saveProfile = async (req, res) => {
       workingTime,
       emergencyAvailable,
       bio,
-      location,
       idNumber,
     } = req.body;
+  
+    const parsedLocation =
+     typeof location === "string" ? JSON.parse(location) : location;
 
     let provider = await Provider.findOne({ user: req.user._id });
 
@@ -123,13 +126,15 @@ exports.saveProfile = async (req, res) => {
       idProof,
       workImages,
       location:
-      location?.lat !== undefined && location?.lng !== undefined
-        ? {
-            lat: Number(location.lat),
-            lng: Number(location.lng),
-          }
-        : provider?.location || undefined,
-    };
+          parsedLocation &&
+          parsedLocation.lat != null &&
+          parsedLocation.lng != null
+            ? {
+                type: "Point",
+                coordinates: [parsedLocation.lng, parsedLocation.lat],
+              }
+            : provider?.location || undefined,
+            };
 
     if (provider) {
       provider = await Provider.findOneAndUpdate(
@@ -225,5 +230,38 @@ exports.updateProviderStatus = async (req, res) => {
       message: "Failed to update status",
       error: error.message,
     });
+  }
+};
+exports.updateLocation = async (req, res) => {
+  try {
+    const { lat, lng } = req.body;
+
+    console.log("📍 RECEIVED:", lat, lng);
+
+    if (lat == null || lng == null) {
+      return res.status(400).json({
+        success: false,
+        message: "lat & lng required",
+      });
+    }
+
+    const provider = await Provider.findOneAndUpdate(
+      { user: req.user._id },
+      {
+        location: {
+          type: "Point",
+          coordinates: [lng, lat], 
+        },
+      },
+      { new: true }
+    );
+
+    console.log(" SAVED:", provider.location);
+
+    res.json({ success: true, provider });
+
+  } catch (error) {
+    console.log("❌ ERROR:", error.message);
+    res.status(500).json({ success: false, message: error.message });
   }
 };

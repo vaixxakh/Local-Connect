@@ -149,9 +149,12 @@ const providerSchema = new mongoose.Schema(
       default: "online",
     },
     location: {
-      lat: Number,
-      lng: Number,
-    },
+      type: {
+        type: String,
+        default: "Point"
+      },
+  coordinates: [Number]
+}
   },
   { timestamps: true }
 );

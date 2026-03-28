@@ -6,6 +6,7 @@ const {
   saveProfile,
   getProvidersByService,
   updateProviderStatus,
+  updateLocation
 } = require("../controllers/providerController");
 const {protect} = require("../middleware/authMiddleware");
 
@@ -26,5 +27,6 @@ router.post(
 router.get("/all", getProvidersByService);
 
 router.patch("/status", protect, updateProviderStatus);
+router.put("/update-location", protect, updateLocation);
 
 module.exports = router;

@@ -3,15 +3,14 @@ import {
   TileLayer,
   Marker,
   Polyline,
-  Popup,
-  useMap
+  useMap,
 } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect } from "react";
 import "../../styles/LiveMapTracker.css";
 
-// FIX DEFAULT ICON
+
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
@@ -23,18 +22,20 @@ L.Icon.Default.mergeOptions({
     "https://unpkg.com/leaflet@1.9.3/dist/images/marker-shadow.png",
 });
 
-// ICONS
-const finderIcon = new L.Icon({
-  iconUrl: "https://cdn-icons-png.flaticon.com/512/149/149060.png",
-  iconSize: [40, 40],
-});
 
-const providerIcon = new L.Icon({
-  iconUrl: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
-  iconSize: [40, 40],
-});
+const createProfileIcon = (imageUrl) => {
+  return new L.DivIcon({
+    html: `
+      <div class="profile-marker">
+        <img src="${imageUrl}" />
+      </div>
+    `,
+    className: "",
+    iconSize: [50, 50],
+  });
+};
 
-// AUTO FIT + RECENTER
+
 const MapController = ({ userPos, providerPos }) => {
   const map = useMap();
 
@@ -50,10 +51,7 @@ const MapController = ({ userPos, providerPos }) => {
   return null;
 };
 
-// DISTANCE
 const getDistance = (lat1, lon1, lat2, lon2) => {
-  if (!lat1 || !lat2) return null;
-
   const R = 6371;
   const dLat = ((lat2 - lat1) * Math.PI) / 180;
   const dLon = ((lon2 - lon1) * Math.PI) / 180;
@@ -68,23 +66,20 @@ const getDistance = (lat1, lon1, lat2, lon2) => {
 };
 
 const LiveMapTracker = ({ userLocation, providerLocation }) => {
-  if (!userLocation) {
-    return (
-      <div className="map-loading-container">
-        <div className="map-loader"></div>
-        <p className="map-loading-text">Fetching location...</p>
-      </div>
-    );
-  }
+  
+  if (!userLocation) return <p>Loading map...</p>;
 
   const userPos = [userLocation.lat, userLocation.lng];
-
   const providerPos =
     providerLocation?.lat && providerLocation?.lng
       ? [providerLocation.lat, providerLocation.lng]
       : null;
 
   const path = providerPos ? [providerPos, userPos] : [];
+
+
+  const userIcon = createProfileIcon("https://i.pravatar.cc/150?img=3");
+  const providerIcon = createProfileIcon("https://i.pravatar.cc/150?img=5");
 
   const distance =
     providerPos &&
@@ -97,12 +92,7 @@ const LiveMapTracker = ({ userLocation, providerLocation }) => {
 
   return (
     <div className="map-wrapper">
-
-      <MapContainer
-        center={userPos}
-        zoom={15}
-        className="map-container"
-      >
+      <MapContainer center={userPos} zoom={15} className="map-container">
         <TileLayer
           attribution="&copy; OpenStreetMap contributors"
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -110,33 +100,39 @@ const LiveMapTracker = ({ userLocation, providerLocation }) => {
 
         <MapController userPos={userPos} providerPos={providerPos} />
 
-        <Marker position={userPos} icon={finderIcon}>
-          <Popup>📍 You</Popup>
-        </Marker>
+        <Marker position={userPos} icon={userIcon} />
 
-        {providerPos && (
-          <Marker position={providerPos} icon={providerIcon}>
-            <Popup>🚗 Provider</Popup>
-          </Marker>
-        )}
+        {providerPos && <Marker position={providerPos} icon={providerIcon} />}
 
+  
         {path.length > 0 && (
-          <Polyline
-            positions={path}
-            pathOptions={{
-              color: "#2563eb",
-              weight: 6,
-              dashArray: "8,10",
-            }}
-          />
+          <>
+            <Polyline
+              positions={path}
+              pathOptions={{
+                color: "#60a5fa",
+                weight: 10,
+                opacity: 0.3,
+              }}
+            />
+            <Polyline
+              positions={path}
+              pathOptions={{
+                color: "#2563eb",
+                weight: 5,
+              }}
+            />
+          </>
         )}
       </MapContainer>
 
+   
       <div className="live-badge">
         <span className="live-dot"></span>
         LIVE
       </div>
 
+      {/* DISTANCE */}
       {distance && (
         <div className="distance-badge">
           🚗 {distance} km away

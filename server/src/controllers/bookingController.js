@@ -21,7 +21,8 @@ const createBooking = async (req, res) => {
       amount,
       providerLocation,
     } = req.body;
-
+    console.log("REQ BODY:", req.body);
+console.log("PROVIDER LOCATION:", providerLocation);
   
     if (!providerId || !serviceName || !bookingDateTime || !address || !amount) {
       return res.status(400).json({

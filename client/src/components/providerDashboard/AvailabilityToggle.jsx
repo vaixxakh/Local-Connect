@@ -14,38 +14,48 @@ const AvailabilityToggle = ({ currentStatus = "online", onStatusChange }) => {
   const [watchId, setWatchId] = useState(null);
 
 
-  const startTracking = () => {
-    if (!navigator.geolocation) return;
+const startTracking = () => {
+  if (!navigator.geolocation) return;
 
-    const id = navigator.geolocation.watchPosition(
-      (pos) => {
-        const bookingId = localStorage.getItem("bookingId");
+  const id = navigator.geolocation.watchPosition(
+    (pos) => {
+      const lat = pos.coords.latitude;
+      const lng = pos.coords.longitude;
 
-        if (!bookingId) return;
+      console.log("📡 Provider:", lat, lng);
+      
+      fetch("/api/providers/update-location", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({ lat, lng }),
+      });
 
-        const lat = pos.coords.latitude;
-        const lng = pos.coords.longitude;
+      
+      const bookingId = localStorage.getItem("bookingId");
 
-        console.log("📡 Provider:", lat, lng);
-
+      if (bookingId) {
         socket.emit("send-location", {
           bookingId,
           lat,
           lng,
         });
-      },
-      (err) => {
-        console.log("⏱ Location timeout, retrying...", err);
-      },
-      {
-        enableHighAccuracy: true,
-        maximumAge: 15000,
-        timeout: 15000,
       }
-    );
+    },
+    (err) => {
+      console.log("⏱ Location timeout:", err);
+    },
+    {
+      enableHighAccuracy: true,
+      maximumAge: 5000,
+      timeout: 15000,
+    }
+  );
 
-    setWatchId(id);
-  };
+  setWatchId(id);
+};
 
   const stopTracking = () => {
     if (watchId !== null) {

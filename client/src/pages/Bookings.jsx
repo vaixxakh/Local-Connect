@@ -118,8 +118,8 @@ const BookingPage = () => {
     let distanceCharge = 0;
     let hasProviderCoords = false;
 
-    const providerLat = selectedProvider?.location?.lat;
-    const providerLng = selectedProvider?.location?.lng;
+    const providerLat = selectedProvider?.location?.coordinates?.[1];
+    const providerLng = selectedProvider?.location?.coordinates?.[0];
 
     if (
       userCoords &&
@@ -206,26 +206,25 @@ const BookingPage = () => {
 
 
   providerLocation:
-  (selectedProvider?.location?.lat && selectedProvider?.location?.lng)
+  selectedProvider?.location?.coordinates
     ? {
-        lat: selectedProvider.location.lat,
-        lng: selectedProvider.location.lng,
-      }
-    : (selectedProvider?.lat && selectedProvider?.lng)
-    ? {
-        lat: selectedProvider.lat,
-        lng: selectedProvider.lng,
+        lat: selectedProvider.location.coordinates[1],
+        lng: selectedProvider.location.coordinates[0],
       }
     : undefined,
     
 
-  
+// providerLocation: {
+//   lat: 12.3070,
+//   lng: 75.0903,
+// },
   userLocation: {
     lat: userCoords.lat,
     lng: userCoords.lng,
   },
 };
-
+console.log("Provider:", selectedProvider);
+console.log("Location:", selectedProvider?.location);
     const token = localStorage.getItem("token");
 
     const res = await createBookingApi(payload, token);
@@ -240,7 +239,7 @@ const BookingPage = () => {
     toast.error("Booking creation failed");
   }
 };
-console.log("Selected Provider:", selectedProvider);
+
 
   if (!selectedProvider) {
     return (
