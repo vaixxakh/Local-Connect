@@ -148,15 +148,20 @@ const providerSchema = new mongoose.Schema(
       enum: ["online", "offline", "busy"],
       default: "online",
     },
-    location: {
-      type: {
-        type: String,
-        default: "Point"
-      },
-  coordinates: [Number]
+   location: {
+  type: {
+    type: String,
+    enum: ['Point'],
+    default: 'Point'
+  },
+ coordinates: {
+  type: [Number],
+  default: [0, 0]
+}
 }
   },
   { timestamps: true }
 );
+providerSchema.index({ location: "2dsphere" });
 
 module.exports = mongoose.model("Provider", providerSchema);

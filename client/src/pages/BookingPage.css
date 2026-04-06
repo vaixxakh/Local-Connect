@@ -258,16 +258,17 @@
 
 .status-text {
   margin-top: 10px;
-  font-size: 0.92rem;
-  font-weight: 600;
+  font-size: 0.9rem !important;
+  font-weight: 300 !important;
 }
 
 .status-text.info {
-  color: #2563eb;
+  color: #25eb28;
 }
 
 .status-text.error {
   color: #dc2626;
+  
 }
 
 .summary-head h3 {

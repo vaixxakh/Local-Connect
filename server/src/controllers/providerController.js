@@ -234,23 +234,29 @@ exports.updateProviderStatus = async (req, res) => {
 };
 exports.updateLocation = async (req, res) => {
   try {
-    const { lat, lng } = req.body;
+    const { location } = req.body;
 
-    console.log("📍 RECEIVED:", lat, lng);
-
-    if (lat == null || lng == null) {
+    if (
+      !location ||
+      !location.coordinates ||
+      location.coordinates.length !== 2
+    ) {
       return res.status(400).json({
         success: false,
-        message: "lat & lng required",
+        message: "Invalid location format",
       });
     }
+
+    const [lng, lat] = location.coordinates;
+
+    console.log("📍 RECEIVED:", lat, lng);
 
     const provider = await Provider.findOneAndUpdate(
       { user: req.user._id },
       {
         location: {
           type: "Point",
-          coordinates: [lng, lat], 
+          coordinates: [lng, lat],
         },
       },
       { new: true }
@@ -261,7 +267,7 @@ exports.updateLocation = async (req, res) => {
     res.json({ success: true, provider });
 
   } catch (error) {
-    console.log("❌ ERROR:", error.message);
+    console.log(" ERROR:", error.message);
     res.status(500).json({ success: false, message: error.message });
   }
 };

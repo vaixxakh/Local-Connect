@@ -259,7 +259,7 @@ console.log("Location:", selectedProvider?.location);
       <div className="booking-bg booking-bg-3"></div>
 
       <div className="booking-container">
-        <div className="booking-topbar">
+        {/* <div className="booking-topbar">
           <div>
             <span className="booking-chip">Service Booking</span>
             <h1 className="booking-title">Complete Your Booking</h1>
@@ -267,7 +267,7 @@ console.log("Location:", selectedProvider?.location);
               Book your service in a premium, smooth and professional flow.
             </p>
           </div>
-        </div>
+        </div> */}
 
         <div className="booking-layout">
           <div className="booking-left glass-card animate-up">

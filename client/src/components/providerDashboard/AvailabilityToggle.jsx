@@ -5,63 +5,102 @@ import { FaMapPin } from "react-icons/fa";
 
 const AvailabilityToggle = ({ currentStatus = "online", onStatusChange }) => {
   const [status, setStatus] = useState(currentStatus);
-
- 
-  const [showPopup, setShowPopup] = useState(
-    currentStatus === "online"
-  );
-
+  const [showPopup, setShowPopup] = useState(currentStatus === "online");
   const [watchId, setWatchId] = useState(null);
 
 
-const startTracking = () => {
-  if (!navigator.geolocation) return;
-
-  const id = navigator.geolocation.watchPosition(
-    (pos) => {
-      const lat = pos.coords.latitude;
-      const lng = pos.coords.longitude;
-
-      console.log("📡 Provider:", lat, lng);
-      
-      fetch("/api/providers/update-location", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify({ lat, lng }),
-      });
-
-      
-      const bookingId = localStorage.getItem("bookingId");
-
-      if (bookingId) {
-        socket.emit("send-location", {
-          bookingId,
-          lat,
-          lng,
-        });
-      }
-    },
-    (err) => {
-      console.log("⏱ Location timeout:", err);
-    },
-    {
-      enableHighAccuracy: true,
-      maximumAge: 5000,
-      timeout: 15000,
+  const startTracking = () => {
+    if (!navigator.geolocation) {
+      console.log(" Geolocation not supported");
+      return;
     }
-  );
 
-  setWatchId(id);
-};
+    
+    if (watchId !== null) {
+      console.log(" Already tracking");
+      return;
+    }
 
+    
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        console.log(" Initial location:", pos.coords);
+
+        const id = navigator.geolocation.watchPosition(
+          async (pos) => {
+            const lat = pos.coords.latitude;
+            const lng = pos.coords.longitude;
+
+            console.log(" Provider:", lat, lng);
+
+            try {
+              await fetch(
+                import.meta.env.VITE_API_URL +
+                  "/api/providers/update-location",
+                {
+                  method: "PUT",
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                  },
+                  body: JSON.stringify({
+                    location: {
+                      type: "Point",
+                      coordinates: [lng, lat],
+                    },
+                  }),
+                }
+              );
+
+              const bookingId = localStorage.getItem("bookingId");
+
+              if (bookingId) {
+                socket.emit("send-location", {
+                  bookingId,
+                  lat,
+                  lng,
+                });
+              }
+            } catch (err) {
+              console.error(" Location save failed:", err);
+            }
+          },
+          (err) => {
+            console.log(" Watch error:", err.message);
+
+            if (err.code === 1) {
+              alert("Please allow location permission");
+            }
+          },
+          {
+            enableHighAccuracy: false,
+            maximumAge: 10000,
+            timeout: 20000,
+          }
+        );
+
+        setWatchId(id);
+      },
+      (err) => {
+        console.log(" Initial location error:", err.message);
+
+        if (err.code === 1) {
+          alert("Location permission denied!");
+        }
+      },
+      {
+        enableHighAccuracy: false,
+        timeout: 20000,
+      }
+    );
+  };
+
+  
   const stopTracking = () => {
     if (watchId !== null) {
       navigator.geolocation.clearWatch(watchId);
       setWatchId(null);
-      console.log("🛑 Tracking stopped");
+      console.log(" Tracking stopped");
     }
   };
 
@@ -81,13 +120,13 @@ const startTracking = () => {
         stopTracking();
       }
     } catch (error) {
-      console.error(error);
+      console.error(" Status update error:", error);
     }
   };
 
   return (
     <>
-   
+     
       <div className="flex gap-2">
         {["online", "busy", "offline"].map((item) => (
           <button
@@ -104,17 +143,16 @@ const startTracking = () => {
         ))}
       </div>
 
-
+      
       {showPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50">
-          
-
           <div className="w-full max-w-sm bg-white rounded-2xl p-6 shadow-2xl animate-slideUp">
-             <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mb-4">
+            <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mb-4"></div>
 
-             </div>
             <div className="text-center">
-              <div className="text-3xl mb-2"><FaMapPin color="red"/></div>
+              <div className="text-3xl mb-2">
+                <FaMapPin color="red" />
+              </div>
 
               <h2 className="text-lg font-semibold mb-1">
                 Enable Location
@@ -135,7 +173,7 @@ const startTracking = () => {
                 <button
                   onClick={() => {
                     setShowPopup(false);
-                    startTracking(); 
+                    startTracking();
                   }}
                   className="flex-1 py-3 rounded-xl bg-green-600 text-white font-semibold shadow-md active:scale-95 transition"
                 >

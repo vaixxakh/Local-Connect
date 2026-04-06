@@ -23,7 +23,7 @@ exports.createRazorpayOrder = async (req, res) => {
     }
 
     const options = {
-      amount: booking.amount * 100, 
+      amount: booking.amount , 
       currency: "INR",
       receipt: `receipt_${booking._id}`,
       notes: {
