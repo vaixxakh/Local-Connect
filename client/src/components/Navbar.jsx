@@ -6,6 +6,7 @@ import { useState, useRef, useEffect } from "react";
 import toast from "react-hot-toast";
 import API from "../service/api.js";
 import "./Navbar.css";
+import { Briefcase } from 'lucide-react';
 
 const Navbar = ({ onLoginClick }) => {
 
@@ -77,12 +78,17 @@ const Navbar = ({ onLoginClick }) => {
   return (
     <nav className="navbar w-full backdrop-blur-lg bg-white/80 border-b border-gray-200 sticky top-0 z-50">
 
-     <div className="navbar-container w-full flex items-center justify-between px-6 py-3">
-        <Link to="/" className="logo text-xl font-bold   tracking-wide py-2 ">
-          LocalConnect
-        </Link>
+     <div className="navbar-container w-full flex items-center">
+          <Link to="/" className=" logo flex items-center space-x-2" data-testid="logo-link">
+              <div className="w-11 h-11 rounded-xl bg-[#2ecc71] flex items-center justify-center">
+                <Briefcase className="w-6 h-6 text-[#064E3B]" />
+              </div>
+              <span className="text-2xl font-semibold text-[#1A1A1A] tracking-tight" style={{ fontFamily: 'Outfit, sans-serif' }}>
+                LocalService
+              </span>
+            </Link>
 
-        <div className="nav-links hidden lg:flex items-center gap-8 font-medium text-gray-700">
+        <div className="nav-links hidden lg:flex items-center  gap-8 font-medium text-gray-700">
 
           <NavLink className="hover:text-blue-600 transition" to="/">Home</NavLink>
           <NavLink className="hover:text-blue-600 transition" to="/Services">Services</NavLink>
@@ -167,9 +173,9 @@ const Navbar = ({ onLoginClick }) => {
 
             <button
               onClick={onLoginClick}
-              className="login-btn px-4 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition"
+              className="login-btn bg-[#2ecc71] text-[#064E3B] hover:bg-[#27ae60] rounded-lg px-6 "
             >
-              Sign In
+              Sign Up
             </button>
 
           )}

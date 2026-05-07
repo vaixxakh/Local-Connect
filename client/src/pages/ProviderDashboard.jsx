@@ -30,11 +30,11 @@ export default function ProviderDashboard() {
         const lat = pos.coords.latitude;
         const lng = pos.coords.longitude;
 
-        console.log("📍 Provider location:", lat, lng);
+        console.log(" Provider location:", lat, lng);
 
         try {
         
-          await fetch(`${import.meta.env.VITE_API_URL}/api/providers/update-location`, {
+          await fetch(`${import.meta.env.VITE_API_URL}/api/provider/update-location`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
@@ -64,9 +64,9 @@ export default function ProviderDashboard() {
         console.log(" Location error:", err.message);
       },
       {
-        enableHighAccuracy: true,
+        enableHighAccuracy: false,
         maximumAge: 0,
-        timeout: 10000,
+        timeout: 20000,
       }
     );
 

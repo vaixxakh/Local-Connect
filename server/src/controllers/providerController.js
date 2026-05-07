@@ -236,9 +236,12 @@ exports.updateLocation = async (req, res) => {
   try {
     const { location } = req.body;
 
+    console.log("BODY:", req.body);
+
     if (
       !location ||
-      !location.coordinates ||
+      location.type !== "Point" ||
+      !Array.isArray(location.coordinates) ||
       location.coordinates.length !== 2
     ) {
       return res.status(400).json({
@@ -249,25 +252,23 @@ exports.updateLocation = async (req, res) => {
 
     const [lng, lat] = location.coordinates;
 
-    console.log("📍 RECEIVED:", lat, lng);
-
     const provider = await Provider.findOneAndUpdate(
       { user: req.user._id },
       {
         location: {
           type: "Point",
-          coordinates: [lng, lat],
+          coordinates: [Number(lng), Number(lat)],
         },
       },
       { new: true }
     );
+    console.log("USER ID:", req.user._id);
+    console.log("UPDATED PROVIDER LOCATION:", provider.location);
 
-    console.log(" SAVED:", provider.location);
 
     res.json({ success: true, provider });
 
   } catch (error) {
-    console.log(" ERROR:", error.message);
     res.status(500).json({ success: false, message: error.message });
   }
 };

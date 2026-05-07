@@ -39,7 +39,7 @@ const BookingSuccessPage = () => {
         }
 
       } catch (err) {
-        console.error("❌ Fetch error:", err);
+        console.error(" Fetch error:", err);
       }
     };
 
@@ -51,10 +51,10 @@ const BookingSuccessPage = () => {
     if (!bookingId) return;
 
     socket.emit("join-booking-room", bookingId);
-    console.log("🟢 Joined room:", bookingId);
+    console.log(" Joined room:", bookingId);
 
     const handleLocation = (loc) => {
-      console.log("📍 Live Provider:", loc);
+      console.log("Live Provider:", loc);
 
       setProviderLocation({
         lat: loc.lat,
@@ -80,7 +80,7 @@ const BookingSuccessPage = () => {
 
         setUserLocation({ lat, lng });
       },
-      (err) => console.log("❌ Finder location error:", err),
+      (err) => console.log(" Finder location error:", err),
       {
         enableHighAccuracy: true,
         maximumAge: 0,

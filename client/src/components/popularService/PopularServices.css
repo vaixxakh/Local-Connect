@@ -1,8 +1,8 @@
 .popular-section {
-  padding: 60px 80px;
-  background: #f3f4f6;
+  padding: 30px 40px;
+  background: #ffffff;
   font-family: "Inter", sans-serif;
-  overflow: hidden; 
+  overflow: hidden; ;
 }
 .popular-wrapper {
   overflow: hidden;

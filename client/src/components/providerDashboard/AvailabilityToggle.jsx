@@ -2,6 +2,7 @@ import { useState } from "react";
 import { updateProviderStatus } from "../../service/providerService";
 import socket from "../../socket/socket";
 import { FaMapPin } from "react-icons/fa";
+import { toast } from "react-hot-toast";
 
 const AvailabilityToggle = ({ currentStatus = "online", onStatusChange }) => {
   const [status, setStatus] = useState(currentStatus);
@@ -17,7 +18,7 @@ const AvailabilityToggle = ({ currentStatus = "online", onStatusChange }) => {
 
     
     if (watchId !== null) {
-      console.log(" Already tracking");
+      console.log("Already tracking");
       return;
     }
 
@@ -36,7 +37,7 @@ const AvailabilityToggle = ({ currentStatus = "online", onStatusChange }) => {
             try {
               await fetch(
                 import.meta.env.VITE_API_URL +
-                  "/api/providers/update-location",
+                  "/api/provider/update-location",
                 {
                   method: "PUT",
                   headers: {
@@ -69,7 +70,7 @@ const AvailabilityToggle = ({ currentStatus = "online", onStatusChange }) => {
             console.log(" Watch error:", err.message);
 
             if (err.code === 1) {
-              alert("Please allow location permission");
+              toast.error("Please allow location permission");
             }
           },
           {
@@ -85,7 +86,7 @@ const AvailabilityToggle = ({ currentStatus = "online", onStatusChange }) => {
         console.log(" Initial location error:", err.message);
 
         if (err.code === 1) {
-          alert("Location permission denied!");
+          toast.error("Location permission denied!");
         }
       },
       {

@@ -39,7 +39,7 @@ const ProviderTrackingPage = () => {
               lng,
             });
 
-            await fetch( import.meta.env.VITE_API_URL +"/api/providers/update-location", {
+            await fetch( import.meta.env.VITE_API_URL +"/api/provider/update-location", {
               method: "PUT",
               headers: {
                 "Content-Type": "application/json",
