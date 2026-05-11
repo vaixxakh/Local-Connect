@@ -3,6 +3,7 @@ import Hero from "../components/Hero";
 import PopularServices from "../components/popularService/PopularServices";
 import  TopRated from "../components/TopRated/TopRated.jsx";
 import HowItWorks from "../components/HowItsWork.jsx";
+import BrowseAllService from "../components/BrowseAllService.jsx";
 
 const Home = () => {
   return (
@@ -12,6 +13,7 @@ const Home = () => {
       <HowItWorks />
       <PopularServices />
       <TopRated/>
+      <BrowseAllService />
       
     </>
   );

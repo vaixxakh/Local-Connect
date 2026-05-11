@@ -124,18 +124,19 @@
 }
 
 .role-switch-btn{
-  background:#2E7D32;
-  color:white;
+  background:#22c55e;
+  color:#064E3B;
   border:none;
   padding:6px 12px;
   border-radius:6px;
+  font-weight: 600;
   cursor:pointer;
   font-size:13px;
   transition:0.2s;
 }
 
 .role-switch-btn:hover{
-  background:#256628;
+  background:#16a34a;
 }
 
 .profile-wrapper {

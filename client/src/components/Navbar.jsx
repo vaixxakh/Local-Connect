@@ -101,7 +101,7 @@ const Navbar = ({ onLoginClick }) => {
               <FaBell size={20} className="text-gray-500 cursor-pointer hover:scale-110 transition"/>
 
               <button
-                className="role-switch-btn px-3 py-1.5 rounded-lg ml-50 text-sm font-medium text-white hover:bg-blue-600 transition"
+                className="role-switch-btn px-3 py-1.5 rounded-lg ml-50 text-sm font-medium transition"
                 onClick={switchRole}
               >
                 {user.role === "finder" ? "Switch to Provider" : "Switch to Finder"}
@@ -202,7 +202,7 @@ const Navbar = ({ onLoginClick }) => {
           {user && (
 
             <button
-              className="role-switch-btn bg-blue-500 text-white px-4 py-2 rounded-lg"
+              className="role-switch-btn  px-4 py-2 rounded-lg"
               onClick={switchRole}
             >
               {user.role === "finder" ? "Switch to Provider" : "Switch to Finder"}
