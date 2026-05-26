@@ -1,114 +1,167 @@
-import { FaPhoneAlt, FaSearch } from "react-icons/fa";
-import EmergencyCard from "../components/EmergencyCard";
-import EmergencyNumber from "../components/EmergencyNumber";
-import "../styles/Emergency.css";
+import { FaExclamationCircle, FaTint, FaBolt, FaHospital, FaFire, FaKey, FaBell,   } from "react-icons/fa";
+import { FiPhone } from "react-icons/fi";
+
+const emergencyServices = [
+
+{
+title:"Plumbing Emergency",
+number:"911",
+icon:<FaTint />,
+bg:"bg-blue-500"
+},
+
+{
+title:"Electrical Emergency",
+number:"912",
+icon:<FaBolt />,
+bg:"bg-yellow-500"
+},
+
+{
+title:"Medical Assistance",
+number:"108",
+icon:<FaHospital />,
+bg:"bg-red-500"
+},
+
+{
+title:"Fire Service",
+number:"101",
+icon:<FaFire />,
+bg:"bg-orange-500"
+},
+
+{
+title:"Lock & Key Emergency",
+number:"913",
+icon:<FaKey />,
+bg:"bg-gray-500"
+},
+
+{
+title:"General Emergency",
+number:"100",
+icon:<FaBell />,
+bg:"bg-purple-500"
+}
+
+];
 
 const Emergency = () => {
-  return (
-    <div className="min-h-screen bg-gray-100 p-10">
-      
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-800">
-          Emergency Contacts – Quick Help in Kanhangad
-        </h1>
-        <p className="text-gray-500 mt-2">
-          Immediate assistance for residents and visitors.
-        </p>
-      </div>
 
-      <div className="flex gap-4 mb-8">
-        <div className="flex items-center bg-white rounded-xl px-4 py-2 shadow w-full max-w-xl">
-          <FaSearch className="text-gray-400 mr-3" />
-          <input
-            type="text"
-            placeholder="Search for hospitals, police stations..."
-            className="outline-none w-full text-sm"
-          />
-        </div>
+return (
 
-        <div className="flex gap-3">
-          <button className="bg-green-500 text-white px-4 py-2 rounded-full text-sm">
-            All Services
-          </button>
-          <button className="bg-white px-4 py-2 rounded-full text-sm shadow">
-            Police
-          </button>
-          <button className="bg-white px-4 py-2 rounded-full text-sm shadow">
-            Ambulance
-          </button>
-          <button className="bg-white px-4 py-2 rounded-full text-sm shadow">
-            Fire
-          </button>
-        </div>
-      </div>
+<div className="min-h-screen bg-[#f5f5f5] px-5 sm:px-8 lg:px-12 py-12">
 
-      <div className="grid grid-cols-3 gap-8">
+<div className="max-w-7xl mx-auto">
 
-        <div className="col-span-2 space-y-8">
 
-          <section>
-            <h2 className="text-xl font-semibold mb-4">Police Stations</h2>
+<div className="flex flex-col items-center text-center mb-14">
 
-            <div className="grid grid-cols-2 gap-6">
-              <EmergencyCard
-                title="Kanhangad Town Police"
-                location="Main Road, Kanhangad"
-              />
-              <EmergencyCard
-                title="Hosdurg Police Station"
-                location="Hosdurg, Kanhangad"
-              />
-            </div>
-          </section>
+<div className="w-20 h-20 rounded-full bg-red-500 flex items-center justify-center text-white text-4xl shadow-lg mb-4">
 
-          <section>
-            <h2 className="text-xl font-semibold mb-4">
-              Ambulance Services
-            </h2>
+<FaExclamationCircle />
 
-            <EmergencyCard
-              title="Lifeline 24/7 Ambulance"
-              location="South Kanhangad"
-            />
-          </section>
+</div>
 
-          {/* FIRE */}
-          <section>
-            <h2 className="text-xl font-semibold mb-4">Fire & Rescue</h2>
+<h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900">
 
-            <EmergencyCard
-              title="Kanhangad Fire Station"
-              location="Near Railway Station"
-            />
-          </section>
+Emergency Services
 
-        </div>
+</h1>
 
-       
-        <div>
-          <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-6">
-            
-            <h3 className="text-red-600 font-semibold mb-4">
-              ⚠ Critical Help
-            </h3>
+<p className="mt-5 text-[#4B5576] text-base sm:text-lg leading-relaxed max-w-2xl">
 
-            <button className="w-full bg-red-600 hover:bg-red-700 text-white py-4 rounded-xl font-semibold shadow-md mb-6">
-            <FaPhoneAlt className="ml-4 " />  GLOBAL EMERGENCY CALL
+Get immediate help for urgent situations.
+Our emergency service providers are available 24/7.
 
-            </button>
+</p>
 
-            <div className="space-y-4">
-              <EmergencyNumber label="Police" number="100" />
-              <EmergencyNumber label="Ambulance" number="108" />
-              <EmergencyNumber label="Fire" number="101" />
-              <EmergencyNumber label="Women Helpline" number="1091" />
-            </div>
+</div>
 
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+
+
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+
+{emergencyServices.map((service,index)=>(
+
+<div
+key={index}
+className="bg-white rounded-3xl border border-gray-100 shadow-md hover:shadow-xl transition-all duration-300 p-6 flex flex-col justify-between min-h-[210px]"
+>
+
+<div className="flex items-start gap-3">
+
+<div className={`w-16 h-16 ${service.bg} rounded-2xl flex items-center justify-center text-white text-xl flex-shrink-0`}>
+
+{service.icon}
+
+</div>
+
+
+<div>
+
+<h2 className="text-lg font-bold text-gray-900">
+
+{service.title}
+
+</h2>
+
+<p className="mt-2   text-gray-500 flex items-center gap-2">
+
+<FiPhone className="text-gray-500 text-lg" />
+
+{service.number}
+
+</p>
+
+</div>
+
+</div>
+<button className="mb-8 py-2 px-8 bg-red-500 hover:bg-red-600 rounded-xl text-white font-semibold transition-all">
+
+Call Now
+
+</button>
+
+</div>
+
+))}
+
+</div>
+
+
+
+
+<div className="mt-20 max-w-5xl mx-auto bg-white rounded-[30px] shadow-md p-5 sm:p-10 lg:p-14 ">
+
+<h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
+
+Need Regular Service?
+
+</h1>
+
+<p className="max-w-2xl  text-gray-500 text-base sm:text-lg leading-relaxed">
+
+For non-emergency services, browse our regular service providers and connect with trusted local professionals.
+
+</p>
+
+<button className="mt-8 px-8 py-4 bg-green-500 hover:bg-green-600 rounded-xl text-white font-semibold transition-all">
+
+Browse Services
+
+</button>
+
+</div>
+
+
+</div>
+
+</div>
+
+);
+
 };
 
 export default Emergency;
