@@ -6,7 +6,7 @@ const MainLayout = ({ onLoginClick }) => {
     <>
       <Navbar onLoginClick={onLoginClick} />
 
-      <div >
+      <div className="max-md:pt-14 max-md:pb-16">
         <Outlet />
       </div>
     </>

@@ -1,5 +1,6 @@
-import { FaExclamationCircle, FaTint, FaBolt, FaHospital, FaFire, FaKey, FaBell,   } from "react-icons/fa";
+import { FaExclamationCircle, FaTint, FaBolt, FaHospital, FaFire, FaKey, FaBell } from "react-icons/fa";
 import { FiPhone } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 const emergencyServices = [
 
@@ -48,8 +49,9 @@ bg:"bg-purple-500"
 ];
 
 const Emergency = () => {
+  const navigate = useNavigate();
 
-return (
+  return (
 
 <div className="min-h-screen bg-[#f5f5f5] px-5 sm:px-8 lg:px-12 py-12">
 
@@ -118,11 +120,12 @@ className="bg-white rounded-3xl border border-gray-100 shadow-md hover:shadow-xl
 </div>
 
 </div>
-<button className="mb-8 py-2 px-8 bg-red-500 hover:bg-red-600 rounded-xl text-white font-semibold transition-all">
-
-Call Now
-
-</button>
+<a
+  href={`tel:${service.number}`}
+  className="mb-8 py-2.5 px-8 bg-red-500 hover:bg-red-650 rounded-xl text-white font-bold transition-all text-center flex items-center justify-center gap-2 shadow-sm"
+>
+  <FiPhone className="text-white text-base" /> Call Now
+</a>
 
 </div>
 
@@ -147,10 +150,11 @@ For non-emergency services, browse our regular service providers and connect wit
 
 </p>
 
-<button className="mt-8 px-8 py-4 bg-green-500 hover:bg-green-600 rounded-xl text-white font-semibold transition-all">
-
-Browse Services
-
+<button
+  onClick={() => navigate("/Services")}
+  className="mt-8 px-8 py-4 bg-[#16A34A] hover:bg-[#148F3F] rounded-xl text-white font-bold transition-all shadow-sm shadow-green-150 hover:shadow-md"
+>
+  Browse Services
 </button>
 
 </div>
