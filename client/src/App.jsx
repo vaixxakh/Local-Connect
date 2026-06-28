@@ -8,7 +8,15 @@ import { useNavigate } from "react-router-dom";
 
 function App() {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
-  const openAuth = () => setIsAuthOpen(true);
+  const [authTab, setAuthTab] = useState("login");
+  const [authRole, setAuthRole] = useState("finder");
+
+  const openAuth = (tab = "login", role = "finder") => {
+    setAuthTab(typeof tab === "string" ? tab : "login");
+    setAuthRole(typeof role === "string" ? role : "finder");
+    setIsAuthOpen(true);
+  };
+
   const closeAuth = () => setIsAuthOpen(false);
 
   const navigate = useNavigate();
@@ -30,7 +38,7 @@ function App() {
         <AppRoutes onLoginClick={openAuth} />
       )}
 
-      <AuthModal isOpen={isAuthOpen} onClose={closeAuth} />
+      <AuthModal isOpen={isAuthOpen} onClose={closeAuth} initialTab={authTab} initialRole={authRole} />
 
       <Toaster
         position="bottom-center"

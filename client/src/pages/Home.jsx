@@ -5,11 +5,11 @@ import  TopRated from "../components/TopRated/TopRated.jsx";
 import HowItWorks from "../components/HowItsWork.jsx";
 import BrowseAllService from "../components/BrowseAllService.jsx";
 
-const Home = () => {
+const Home = ({ onLoginClick }) => {
   return (
     <>
       
-      <Hero />
+      <Hero onLoginClick={onLoginClick} />
       <HowItWorks />
       <PopularServices />
       <TopRated/>

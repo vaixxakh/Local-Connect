@@ -14,7 +14,7 @@ import Profile from "../pages/Profile";
 import Bookings from "../pages/Bookings";
 import PaymentPage from "../pages/PaymentPage";
 import Emergency from "../pages/Emergency";
-import  BookingSuccessPage from "../pages/BookingSuccessPage"
+import  BookingSuccessPage from "../pages/BookingSuccessPage";
 
 const AppRoutes = ({onLoginClick }) => {
     return (
@@ -28,7 +28,7 @@ const AppRoutes = ({onLoginClick }) => {
 
         
         <Route element={<MainLayout onLoginClick={onLoginClick} />}>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home onLoginClick={onLoginClick} />} />
 
           <Route path="/Services" element={<Services />} />
           <Route

@@ -1,10 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import "./AuthModal.css";
 
-const AuthModal = ({ isOpen, onClose }) => {
-  const [activeTab, setActiveTab] = useState("login");
+const AuthModal = ({ isOpen, onClose, initialTab = "login", initialRole = "finder" }) => {
+  const [activeTab, setActiveTab] = useState(initialTab);
+
+  useEffect(() => {
+    if (isOpen) {
+      setActiveTab(initialTab);
+    }
+  }, [isOpen, initialTab]);
 
   if (!isOpen) return null;
 
@@ -36,7 +42,7 @@ const AuthModal = ({ isOpen, onClose }) => {
           {activeTab === "login" ? (
             <Login onClose={onClose} setActiveTab={setActiveTab} />
           ) : (
-            <Register onClose={onClose} />
+            <Register onClose={onClose} initialRole={initialRole} />
           )}
         </div>
       </div>

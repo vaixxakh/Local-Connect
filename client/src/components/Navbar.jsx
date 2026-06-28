@@ -101,7 +101,7 @@ const Navbar = ({ onLoginClick }) => {
               <FaBell size={20} className="text-gray-500 cursor-pointer hover:scale-110 transition"/>
 
               <button
-                className="role-switch-btn px-3 py-1.5 rounded-lg ml-50 text-sm font-medium transition"
+                className="role-switch-btn px-3 py-1.5 rounded-lg ml-50 font-[Figtree] text-sm font-medium transition"
                 onClick={switchRole}
               >
                 {user.role === "finder" ? "Switch to Provider" : "Switch to Finder"}
@@ -125,7 +125,7 @@ const Navbar = ({ onLoginClick }) => {
 
                 <FaUserCircle size={28} className="text-gray-500"/>
 
-                <span className="username text-sm font-semibold text-gray-700">
+                <span className="username text-sm font-semibold font-[Figtree] text-gray-700">
                   @{username?.charAt(0) + username?.slice(1)}
                 </span>
 

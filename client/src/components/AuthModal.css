@@ -1,3 +1,20 @@
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 /* OVERLAY */
 .auth-overlay{
   position:fixed;
@@ -8,6 +25,7 @@
   justify-content:center;
   align-items:center;
   z-index:999;
+  animation: fadeIn 0.4s ease-out;
 }
 
 
@@ -20,6 +38,7 @@
   position:relative;
   display:flex;
   flex-direction:column;
+  animation: scaleUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .close-btn{

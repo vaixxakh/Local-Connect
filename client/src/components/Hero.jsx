@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 
-const Hero = () => {
+const Hero = ({ onLoginClick }) => {
   const navigate = useNavigate();
-
+  const { user } = useSelector((state) => state.auth);
 
 
   return <>
@@ -32,12 +33,14 @@ const Hero = () => {
               Find Services →
             </button>
 
-            <button
-              onClick={() => navigate("/become-provider")}
-              className="px-10 py-2 border font-[Figtree] cborder-gray-300 rounded-lg text-[20px] text-gray-700 hover:bg-gray-50 transition"
-            >
-              Become a Provider
-            </button>
+            {!user && (
+              <button
+                onClick={() => onLoginClick && onLoginClick("register")}
+                className="px-10 py-2 border font-[Figtree] cborder-gray-300 rounded-lg text-[20px] text-gray-700 hover:bg-gray-50 transition"
+              >
+                Become a Provider
+              </button>
+            )}
 
           </div>
         </div>

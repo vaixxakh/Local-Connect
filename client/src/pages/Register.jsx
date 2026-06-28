@@ -1,15 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaSearch, FaUserTie, FaEye, FaEyeSlash } from "react-icons/fa";
 import API from "../service/api.js";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import "../pages/Register.css";
 
-const Register = ({ onClose }) => {
+const Register = ({ onClose, initialRole = "finder" }) => {
 
   const navigate = useNavigate();
 
-  const [purpose, setPurpose] = useState("finder");
+  const [purpose, setPurpose] = useState(initialRole);
+
+  useEffect(() => {
+    setPurpose(initialRole);
+  }, [initialRole]);
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
