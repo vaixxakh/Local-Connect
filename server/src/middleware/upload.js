@@ -2,24 +2,22 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
-const uploadPath = "uploads/providers";
+const providerUploadPath = "uploads/providers";
+const avatarUploadPath = "uploads/avatars";
 
-
-if (!fs.existsSync(uploadPath)) {
-  fs.mkdirSync(uploadPath, { recursive: true });
-}
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, uploadPath);
-  },
-
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`;
-    cb(null, uniqueName);
-  },
+[providerUploadPath, avatarUploadPath].forEach((p) => {
+  if (!fs.existsSync(p)) fs.mkdirSync(p, { recursive: true });
 });
+
+const makeStorage = (dest) =>
+  multer.diskStorage({
+    destination: (req, file, cb) => cb(null, dest),
+    filename: (req, file, cb) => {
+      const ext = path.extname(file.originalname);
+      const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`;
+      cb(null, uniqueName);
+    },
+  });
 
 const fileFilter = (req, file, cb) => {
   const allowedTypes = /jpg|jpeg|png|webp/;
@@ -27,11 +25,7 @@ const fileFilter = (req, file, cb) => {
   const mimeType = file.mimetype;
 
   const isValidExt = allowedTypes.test(ext);
-  const isValidMime =
-    mimeType === "image/jpg" ||
-    mimeType === "image/jpeg" ||
-    mimeType === "image/png" ||
-    mimeType === "image/webp";
+  const isValidMime = ["image/jpg", "image/jpeg", "image/png", "image/webp"].includes(mimeType);
 
   if (isValidExt && isValidMime) {
     cb(null, true);
@@ -40,9 +34,8 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-const upload = multer({
-  storage,
-  fileFilter,
-});
+const upload = multer({ storage: makeStorage(providerUploadPath), fileFilter });
+const uploadAvatar = multer({ storage: makeStorage(avatarUploadPath), fileFilter });
 
 module.exports = upload;
+module.exports.avatar = uploadAvatar;

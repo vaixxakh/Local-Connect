@@ -194,9 +194,25 @@ const updateProviderLocation = async (req, res) => {
   }
 };
 
+const getUserBookings = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    const bookings = await Booking.find({ userId })
+      .sort({ createdAt: -1 })
+      .populate("providerId", "name profileImage service rating status")
+      .lean();
+
+    res.status(200).json({ success: true, bookings });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Error fetching bookings", error: error.message });
+  }
+};
+
 module.exports = {
   createBooking,
   getBookingById,
   updatePaymentStatus,
   updateProviderLocation,
+  getUserBookings,
 };

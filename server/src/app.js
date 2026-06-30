@@ -5,8 +5,8 @@ const authRoutes = require("./routes/authRoutes");
 const providerRoutes = require("./routes/providerRoutes");
 const userRoutes = require("./routes/userRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
-
 const paymentRoutes = require("./routes/paymentRoutes");
+const reviewRoutes = require("./routes/reviewRoutes");
 
 const app = express();
 
@@ -29,5 +29,6 @@ app.use("/api/auth", authRoutes);
 app.use("/api/provider", providerRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/reviews", reviewRoutes);
 
 module.exports = app;

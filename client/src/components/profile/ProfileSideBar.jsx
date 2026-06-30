@@ -1,90 +1,79 @@
+import { useDispatch } from "react-redux";
+import { logout } from "../../features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
 import {
-  FaUser,
-  FaBookmark,
-  FaCalendar,
-  FaStar,
-  FaCog,
-  FaSignOutAlt
+  FaUser, FaInfoCircle, FaCalendarAlt, FaHeart, FaStar, FaCog,
+  FaSignOutAlt, FaBriefcase
 } from "react-icons/fa";
 
-const ProfileSidebar = () => {
+const NAV_ITEMS = [
+  { id: "overview", label: "Profile Overview", icon: <FaUser /> },
+  { id: "info", label: "Personal Details", icon: <FaInfoCircle /> },
+  { id: "bookings", label: "Recent Bookings", icon: <FaCalendarAlt /> },
+  { id: "saved", label: "Saved Services", icon: <FaHeart /> },
+  { id: "reviews", label: "My Reviews", icon: <FaStar /> },
+  { id: "settings", label: "Settings", icon: <FaCog /> },
+];
 
-  const handleScroll = (sectionId) => {
+const ProfileSideBar = ({ activeSection, onNavigate, user }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    const section = document.getElementById(sectionId);
-
-    if (section) {
-      section.scrollIntoView({
-        behavior: "smooth"
-      });
-    }
-
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/");
   };
 
-  const logout = () => {
-
-    localStorage.removeItem("user");
-    window.location.href = "/login";
-
-  };
+  const initials = user?.fullName
+    ? user.fullName.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase()
+    : "U";
 
   return (
+    <aside className="profile-sidebar">
+      <div className="sidebar-header">
+        {/* User Card */}
+        <div className="sidebar-user-card">
+          {user?.profileImage ? (
+            <img
+              src={user.profileImage}
+              alt={user.fullName}
+              className="sidebar-avatar"
+            />
+          ) : (
+            <div className="sidebar-avatar-placeholder">{initials}</div>
+          )}
+          <div className="sidebar-user-info">
+            <div className="sidebar-user-name">{user?.fullName || "User"}</div>
+            <span className="sidebar-user-role">{user?.role || "finder"}</span>
+          </div>
+        </div>
+      </div>
 
-    <aside className="sidebar">
+      {/* Navigation */}
+      <nav className="sidebar-nav">
+        <div className="sidebar-nav-section">
+          <div className="sidebar-nav-label">Account</div>
+          {NAV_ITEMS.map((item) => (
+            <button
+              key={item.id}
+              className={`sidebar-nav-item ${activeSection === item.id ? "active" : ""}`}
+              onClick={() => onNavigate(item.id)}
+            >
+              <span className="nav-icon">{item.icon}</span>
+              {item.label}
+            </button>
+          ))}
+        </div>
 
-      <h2 className="logo">LocalConnect</h2>
+        <div className="sidebar-divider" />
 
-      <ul className="sidebar-menu">
-
-        <li
-          data-section="overview"
-          className="active"
-          onClick={() => handleScroll("overview")}
-        >
-          <FaUser /> Profile Overview
-        </li>
-
-        <li
-          data-section="saved"
-          onClick={() => handleScroll("saved")}
-        >
-          <FaBookmark /> Saved Services
-        </li>
-
-        <li
-          data-section="bookings"
-          onClick={() => handleScroll("bookings")}
-        >
-          <FaCalendar /> Booking History
-        </li>
-
-        <li
-          data-section="reviews"
-          onClick={() => handleScroll("reviews")}
-        >
-          <FaStar /> My Reviews
-        </li>
-
-        <li
-          data-section="settings"
-          onClick={() => handleScroll("settings")}
-        >
-          <FaCog /> Settings
-        </li>
-
-        <li
-          className="logout"
-          onClick={logout}
-        >
-          <FaSignOutAlt /> Logout
-        </li>
-
-      </ul>
-
+        <button className="sidebar-logout-btn" onClick={handleLogout}>
+          <FaSignOutAlt className="nav-icon" />
+          Sign Out
+        </button>
+      </nav>
     </aside>
-
   );
-
 };
 
-export default ProfileSidebar;
+export default ProfileSideBar;

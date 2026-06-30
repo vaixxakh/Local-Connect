@@ -100,7 +100,9 @@ const Navbar = ({ onLoginClick }) => {
               {user && (
                 <div className="flex items-center gap-4">
 
-                  <FaHeart size={20} className="text-red-500 cursor-pointer hover:scale-110 transition"/>
+                  <Link to="/profile#saved">
+                    <FaHeart size={20} className="text-red-500 cursor-pointer hover:scale-110 transition"/>
+                  </Link>
                   <FaBell size={20} className="text-gray-500 cursor-pointer hover:scale-110 transition"/>
 
                   <button
@@ -138,22 +140,22 @@ const Navbar = ({ onLoginClick }) => {
 
                     <div className="profile-dropdown absolute right-0 mt-3 w-56 bg-white shadow-xl border rounded-xl overflow-hidden animate-dropdown">
 
-                      <Link to="/profile" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100">
+                      <Link to="/profile#overview" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100">
                         <FaUser className="menu-icon"/>
                         Account
                       </Link>
 
-                      <Link to="/my-bookings" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100">
+                      <Link to="/profile#bookings" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100">
                         <FaClipboardList className="menu-icon"/>
                         My Bookings
                       </Link>
 
-                      <Link to="/history" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100">
+                      <Link to="/profile#bookings" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100">
                         <FaHistory className="menu-icon"/>
                         History
                       </Link>
 
-                      <Link to="/terms" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100">
+                      <Link to="#" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100">
                         <FaFileAlt className="menu-icon"/>
                         Terms and conditions
                       </Link>
